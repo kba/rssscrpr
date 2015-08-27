@@ -3,18 +3,33 @@
 //Feed-Validator
 //http://validator.w3.org/feed/
 
-/* TODO: BITOnline Pipe (low prio)
- * TODO Twitter
+/*
  * TODO Facebook
  * TODO Rechenzentrum
+ * TODO Rektoratsnachrichten
+ * TODO: BITOnline Pipe (low prio)
  http://www.b-i-t-online.de/bitrss.xml
  mit "b.i.t.online - Ausgabe" anfangen herausfiltern
  auf Webseite verlinken
+ 
  */
 
+ /*
+Examples calls:
+
+index.php?url=http://www.ub.uni-dortmund.de/listen/inetbib/date1.html&noanswers=true&nojobs
+
+index.php?url=http://www.handle.net/mail-archive/handle-info/
+
+index.php?url=https://twitter.com/UBMannheim&nofb&noretweet
+index.php?url=https://twitter.com/hashtag/zotero
+ */
+ 
+ 
 //default values
 $maxResult = 15;
 $titleExcludeWords = array();
+$exclusionTest = array();
 $feedUrl = 'http://www.ub.uni-dortmund.de/listen/inetbib/date1.html';
 $feedTitle = 'Inetbib Neueste (relevante) Einträge';
 $feedDescription = '';
@@ -27,8 +42,21 @@ if (array_key_exists('max', $_GET) && is_numeric($_GET['max'])) {
 if (array_key_exists('url', $_GET)) {
     $feedUrl = $_GET['url'];
 }
+if (array_key_exists('parseStrategy', $_GET)) {
+    $parseStrategy = $_GET['parseStrategy'];
+} else {
+	if (strpos($feedUrl, 'twitter') !== false ) {
+		$parseStrategy = 'twitter';
+	}
+}
 if (array_key_exists('noanswers', $_GET)) {
     $titleExcludeWords[] = 'Re: ';
+}
+if (array_key_exists('nofb', $_GET)) {// e.g. exclude automatic posting in twitter from facebook
+    $titleExcludeWords[] = 'http://fb.me';
+}
+if (array_key_exists('noretweet', $_GET)) {
+    $exclusionTest[] = 'retweet';
 }
 if (array_key_exists('nojobs', $_GET)) {
     $titleExcludeWords[] = 'Stellenanzeige';
@@ -56,17 +84,22 @@ function ensureAbsoluteUrl($url, $feedUrl) {
         return $url;
     } else {
         $feedUrlInfo = parse_url($feedUrl);
-        return implode('', array(
-            $feedUrlInfo['scheme'], '://',
-            $feedUrlInfo['host'], '/',
-            dirname($feedUrlInfo['path']), '/',
-            $url));
+		$result = $feedUrlInfo['scheme'] .  '://' . $feedUrlInfo['host'];
+		if ( strlen(dirname($feedUrlInfo['path'])) > 1 && // i.e. not just \
+			substr($url, 0, 1) !== "/" ) {// 
+			if (substr($feedUrlInfo['path'],-1) == "/") {
+				$result .= $feedUrlInfo['path'];
+			} else {
+				$result .= dirname($feedUrlInfo['path']) . '/';
+			}
+		}
+		return $result . $url;
     }
 }
 
 $itemList = array();
 if ($parseStrategy === 'mhonarc_list_date') {
-    $elements = $xpath->query("//ul/ul/li");// war //ul//ul//li
+	$elements = $xpath->query("//ul/ul/li");// war //ul//ul//li
 
     foreach ($elements as $e) {
         $item = array();
@@ -79,6 +112,21 @@ if ($parseStrategy === 'mhonarc_list_date') {
         $item['description'] = '';
         $itemList[] = $item;
     }
+}
+if ($parseStrategy === 'twitter') {
+	$elements = $xpath->query("//*[contains(@class, 'original-tweet')]");
+	foreach ($elements as $e) {
+        $item = array('title' => '', 'url' => '', 'author' => '', 'date' => '', 'description' => '', 'test' => '');
+        $linkToMsg = $xpath->query(".//a[contains(@class, 'tweet-timestamp')]", $e)->item(0);
+		$item['url'] = ensureAbsoluteUrl($linkToMsg->getAttribute('href'), $feedUrl);
+        $item['title'] = $xpath->query(".//p[contains(@class, 'TweetTextSize')]", $e)->item(0)->textContent;
+		$item['author'] = $xpath->query(".//strong[contains(@class, 'fullname')]", $e)->item(0)->textContent;
+		$item['date'] = $linkToMsg->getAttribute('data-original-title');//TODO why is this not work as expected?
+		if ( $xpath->query(".//span[contains(@class, 'js-retweet-text')]", $e)->length > 0) {
+			$item['test'] = $xpath->query(".//span[contains(@class, 'js-retweet-text')]", $e)->item(0)->textContent;
+		}
+		$itemList[] = $item;
+	}
 }
 
 header ("content-type: text/xml");
@@ -94,6 +142,12 @@ foreach ($itemList as $item) {
     // filter all items with any of the $titleExcludeWords in the title
     foreach ($titleExcludeWords as $titleFilter) {
         if (strpos($item['title'], $titleFilter) !== false) {
+            continue 2;
+        }
+    }
+	// filter all items based on the test value
+	foreach ($exclusionTest as $testFilter) {
+        if (strpos($item['test'], $testFilter) !== false) {
             continue 2;
         }
     }
