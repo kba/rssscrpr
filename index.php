@@ -32,11 +32,13 @@ date_default_timezone_set('UTC');
 $feed = array(
     'maxResult' => 15,
     'dummyEmail' => 'nobody@nowhere.none',
+    // TODO make sure this is $_GET overrideable
     'exclude' => array(
         'title' => array(),
         'test' => array()
     ),
     'url' => 'http://www.ub.uni-dortmund.de/listen/inetbib/date1.html',
+    // TODO create site-specific templates (title, description, parseStrategy, exclude etc.
     'title' => 'Inetbib Neueste (relevante) Einträge',
     'description' => '',
     'parseStrategy' => 'mhonarc_list_date',
@@ -71,11 +73,13 @@ $debugRequestParams = [];
 foreach($_GET as $key => $value) {
     $debugRequestParams[] = ($value !== '') 
         ? $key . '=' . $value
-        : $debugRequestParams[] = $key;
+        : $key;
 }
 $debugRequestParamsString = implode(', ', $debugRequestParams);
 
+// TODO cache by URL for at least 10 minutes
 $html = file_get_contents($feed['url']);
+// TODO allow consuming JSON
 $dom = new DOMDocument();
 @$dom->loadHTML($html);
 $xpath = new DOMXPath($dom);
@@ -86,19 +90,22 @@ function ensureAbsoluteUrl($url) {
     if (substr($url, 0, 4) == 'http') {
         return $url;
     } else {
-		$result = $feed['urlParsed']['scheme'] .  '://' . $feed['urlParsed']['host'];
-		if ( strlen(dirname($feed['urlParsed']['path'])) > 1 && // i.e. not just /
-			substr($url, 0, 1) !== "/" ) {// 
-			if (substr($feed['urlParsed']['path'],-1) == "/") {
-				$result .= $feed['urlParsed']['path'];
-			} else {
-				$result .= dirname($feed['urlParsed']['path']) . '/';
-			}
-		}
-		return $result . $url;
+        $result = $feed['urlParsed']['scheme'] .  '://' . $feed['urlParsed']['host'];
+        // TODO chomp trailing slashes and then implode for clarity
+        if ( strlen(dirname($feed['urlParsed']['path'])) > 1 && // i.e. not just /
+            substr($url, 0, 1) !== "/" ) {// 
+            if (substr($feed['urlParsed']['path'],-1) == "/") {
+                $result .= $feed['urlParsed']['path'];
+            } else {
+                $result .= dirname($feed['urlParsed']['path']) . '/';
+            }
+        }
+        return $result . $url;
     }
 }
 
+// TODO make feed a class, with ->addItem
+// TODO make item a class, with new($e) and ->getDate, ->getTitle etc.
 $itemList = array();
 if ($feed['parseStrategy'] === 'mhonarc_list_date') {
     $elements = $xpath->query("//ul/ul/li");// war //ul//ul//li
@@ -115,19 +122,19 @@ if ($feed['parseStrategy'] === 'mhonarc_list_date') {
         $itemList[] = $item;
     }
 } else if ($feed['parseStrategy'] === 'twitter') {
-	$elements = $xpath->query("//*[contains(@class, 'original-tweet')]");
-	foreach ($elements as $e) {
+    $elements = $xpath->query("//*[contains(@class, 'original-tweet')]");
+    foreach ($elements as $e) {
         $item = array('title' => '', 'url' => '', 'author' => '', 'date' => '', 'description' => '', 'test' => '');
         $linkToMsg = $xpath->query(".//a[contains(@class, 'tweet-timestamp')]", $e)->item(0);
-		$item['url'] = ensureAbsoluteUrl($linkToMsg->getAttribute('href'));
+        $item['url'] = ensureAbsoluteUrl($linkToMsg->getAttribute('href'));
         $item['title'] = $xpath->query(".//p[contains(@class, 'TweetTextSize')]", $e)->item(0)->textContent;
-		$item['author'] = $xpath->query(".//strong[contains(@class, 'fullname')]", $e)->item(0)->textContent;
-		$item['date'] = $linkToMsg->getAttribute('data-original-title');//TODO why is this not work as expected?
-		if ( $xpath->query(".//span[contains(@class, 'js-retweet-text')]", $e)->length > 0) {
-			$item['test'] = $xpath->query(".//span[contains(@class, 'js-retweet-text')]", $e)->item(0)->textContent;
-		}
-		$itemList[] = $item;
-	}
+        $item['author'] = $xpath->query(".//strong[contains(@class, 'fullname')]", $e)->item(0)->textContent;
+        $item['date'] = $linkToMsg->getAttribute('data-original-title');//TODO why is this not work as expected?
+        if ( $xpath->query(".//span[contains(@class, 'js-retweet-text')]", $e)->length > 0) {
+            $item['test'] = $xpath->query(".//span[contains(@class, 'js-retweet-text')]", $e)->item(0)->textContent;
+        }
+        $itemList[] = $item;
+    }
 }
 
 header ("content-type: text/xml");
@@ -151,6 +158,7 @@ foreach ($itemList as $item) {
     if ($count++ >= $feed['maxResult']) {
         break;
     }
+    // TODO research convention of author name
     if (!array_key_exists('email', $item)) {
         $item['email'] = $feed['dummyEmail'];
     }
