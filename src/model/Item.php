@@ -8,6 +8,7 @@ class Item {
     var $title;
     var $author;
     var $email = 'nobody@nowhere.no';
+    // this field isn't output but only for filtering, scraper may add data to it.
     var $test;
 
     public function __construct($args = array()) {
