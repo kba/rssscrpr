@@ -20,23 +20,29 @@ class RetrieverFactory {
             throw new Exception("Must pass url.");
         }
 
+        // Create the session
         $session = new Session($queryParams['url']);
+
+        // Setup filter
         if (array_key_exists('noanswers', $queryParams)) {
-            $session->exclude['title'][] = 'Re: ';
+            $session->filter->title[] = 'Re: ';
         }
         if (array_key_exists('nojobs', $queryParams)) {
-            $session->exclude['title'][] = 'Stellenanzeige';
-            $session->exclude['title'][] = 'Stellenangebot';
-            $session->exclude['title'][] = 'Stellenausschreibung';
+            $session->filter->title[] = 'Stellenanzeige';
+            $session->filter->title[] = 'Stellenangebot';
+            $session->filter->title[] = 'Stellenausschreibung';
         }
         if (array_key_exists('nofb', $queryParams)) {// e.g. exclude automatic posting in twitter from facebook
-            $session->exclude['title'][] = 'http://fb.me';
+            $session->filter->title[] = 'http://fb.me';
         }
         if (array_key_exists('noretweet', $queryParams)) {
-            $session->exclude['test'][] = 'retweet';
+            $session->filter->test[] = 'retweet';
+        }
+        if (array_key_exists('max', $queryParams)) {
+            $session->filter->maxResult = $queryParams['max'];
         }
 
-        //
+        // TODO that's a bit too generic I guess.
         foreach ($queryParams as $k => $v) {
             if (property_exists('Session', $k)) {
                 if (is_array($session->$k)) {
