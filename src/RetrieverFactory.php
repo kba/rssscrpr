@@ -1,7 +1,8 @@
 <?php
 
-require_once 'src/model/Session.php';
+require_once 'src/Session.php';
 require_once 'src/Retriever.php';
+require_once 'src/filter/SimpleFilter.php';
 require_once 'src/scraper/MHonArcScraper.php';
 require_once 'src/scraper/TwitterScraper.php';
 

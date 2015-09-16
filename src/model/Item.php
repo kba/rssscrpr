@@ -37,12 +37,12 @@ class Item {
     public function toRSS(DOMElement $elem_item)
     {
         $xml = $elem_item->ownerDocument;
-        $elem_item->appendChild($xml->createElement("title", $this->title));
-        $elem_item->appendChild($xml->createElement("guid", $this->url));
-        $elem_item->appendChild($xml->createElement("link", $this->url));
-        $elem_item->appendChild($xml->createElement("description", $this->description));
-        $elem_item->appendChild($xml->createElement("author", $this->getAuthorWithEmail()));
-        $elem_item->appendChild($xml->createElement("date", $this->date));
+        $elem_item->appendChild($xml->createElement("title", htmlspecialchars($this->title)));
+        $elem_item->appendChild($xml->createElement("guid", htmlspecialchars($this->url)));
+        $elem_item->appendChild($xml->createElement("link", htmlspecialchars($this->url)));
+        $elem_item->appendChild($xml->createElement("description", htmlspecialchars($this->description)));
+        $elem_item->appendChild($xml->createElement("author", htmlspecialchars($this->getAuthorWithEmail())));
+        $elem_item->appendChild($xml->createElement("date", htmlspecialchars($this->date)));
     }
 }
 

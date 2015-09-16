@@ -1,8 +1,8 @@
 <?php
 
-require_once 'src/ItemFilter.php';
+require_once 'src/FeedFilter.php';
 
-class NopFilter extends ItemFilter
+class NopFilter extends FeedFilter
 {
     public function filter(Session $session)
     {

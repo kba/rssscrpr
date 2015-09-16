@@ -1,6 +1,7 @@
 <?php
 
 require_once 'src/Fetcher.php'; 
+
 class HttpFetcher extends Fetcher
 {
     public function fetch(Session $session)

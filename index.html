@@ -1,0 +1,113 @@
+<!doctype html>
+<!-- vim: set sw=4 ts=4: -->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>RSS Feed Filter</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">UBMA CYOS</a>
+            </div>
+            <!--/.navbar-collapse -->
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 80px;">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default" id="results">
+                    <div class="panel-heading">Create Your Own Scraper</div>
+                    <form id="cyos-form">
+                        <div class="form-group">
+                            <input type="checkbox" data-enable="fetcher"/>
+                            <label for="inputFetcher">Fetcher</label>
+                            <select class="form-control" name="fetcher" disabled>
+                                <option value="HttpFetcher">HttpFetcher</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" data-enable="parser"/>
+                            <label for="inputParser">Parser</label>
+                            <select class="form-control" name="parser" disabled>
+                                <option value="HtmlParser">HtmlParser</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" data-enable="scraper"/>
+                            <label for="inputFetcher">Scraper</label>
+                            <select class="form-control" name="scraper" id="scraper" disabled>
+                                <option value="MHonArcScraper" default>MHonArcScraper</option>
+                                <option value="TwitterScraper">TwitterScraper</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Filters</label>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="nofb">No Facebook Retweets
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="noanswers">No Answers in Mailing Lists
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="nojobs">Keine Stellenangebote
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="noretweet">Keine Neuzwitscherungen
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-default" id="results">
+                    <div class="panel-heading">Results</div>
+                    <div class="panel-body">
+                        <div class="input-group" id="input-group-url">
+                            <input class="form-control" id="inputUrl" type="text" placeholder="Hier die URL" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="button">Go!</button>
+                            </span>
+                        </div>
+                        <a href="" id="api-uri">Copy/Paste RSS URL</a>
+                        Number of Results:
+                        <span id="results-found">0</span>
+                        <div id="result-list"> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <footer>
+            <p>&copy; Universitätsbibliothek Mannheim 2015</p>
+        </footer>
+        <script src="./main.js"></script>
+    </div>
+</body>
+
+</html>

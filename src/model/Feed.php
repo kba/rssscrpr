@@ -31,7 +31,7 @@ class Feed {
 
     public function getItems() 
     {
-        return $this->items;
+        return array_values($this->items);
     }
 
     public function size()
@@ -53,8 +53,8 @@ class Feed {
         $elem_rss->setAttribute("version", "2.0");
 
         $elem_channel = $xml->createElement("channel");
-        $elem_channel->appendChild($xml->createElement("title", $this->title));
-        $elem_channel->appendChild($xml->createElement("description", $this->description));
+        $elem_channel->appendChild($xml->createElement("title", htmlspecialchars($this->title)));
+        $elem_channel->appendChild($xml->createElement("description", htmlspecialchars($this->description)));
         $elem_channel->appendChild($xml->createElement("link", $this->url)); 
 
         foreach ($this->items as $item)
@@ -67,7 +67,6 @@ class Feed {
         $xml->appendChild($elem_rss);
         $elem_rss->appendChild($elem_channel);
     }
-
 }
  
 ?>

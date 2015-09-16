@@ -1,6 +1,6 @@
 <?php
 
-abstract class FeedFilterConfig
+class FeedFilterConfig
 {
     // maximum number of items per feed
     var $maxResult = 20;

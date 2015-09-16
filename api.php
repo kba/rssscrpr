@@ -30,8 +30,8 @@ date_default_timezone_set('UTC');
 
 require_once 'src/RetrieverFactory.php';
 
-// $_GET['url'] = 'http://www.ub.uni-dortmund.de/listen/inetbib/date1.html#56142';
-$_GET['url'] = 'https://twitter.com/UBMannheim';
+$_GET['url'] = 'http://www.ub.uni-dortmund.de/listen/inetbib/date1.html#56142';
+// $_GET['url'] = 'https://twitter.com/UBMannheim';
 // $_GET['scraper'] = 'MHonArcScraper';
 
 $retriever = RetrieverFactory::createFromQueryParams($_GET);
@@ -39,3 +39,4 @@ $feed = $retriever->go();
 
 header('Content-Type: application/rss+xml');
 echo $feed->asRSS()->saveXML();
+?>
