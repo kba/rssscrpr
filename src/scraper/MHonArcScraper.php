@@ -1,26 +1,16 @@
 <?php
 
-require_once 'src/Scraper.php';
+require_once 'src/scraper/XpathScraper.php';
 
-class MHonArcScraper extends Scraper 
+class MHonArcScraper extends XpathScraper
 {
-
-    function scrape(Session $session)
+    public function __construct()
     {
-        $elements = $session->xpath->query("//ul/ul/li");// war //ul//ul//li
-
-        foreach ($elements as $e)
-        {
-            $item = $session->feed->addItem();
-
-            $linkToMsg = $session->xpath->query(".//a", $e)->item(0);
-            $item->title = $linkToMsg->nodeValue;
-            // author is right of title
-            $item->author = ltrim(explode($item->title, $e->textContent)[1], ", ");
-            $item->url = $this->ensureAbsoluteUrl($linkToMsg->getAttribute('href'), $session->url);
-            $item->date = date(DATE_RFC822, strtotime($e->parentNode->previousSibling->previousSibling->nodeValue));
-            $item->description = '';
-        }
+        $this->xpathItem = "//ul/ul/li";
+        $this->xpathTitle = ".//a";
+        $this->xpathLink = ".//a/@href";
+        $this->xpathAuthor = 'text()';
+        $this->xpathDate = "ancestor::ul/preceding-sibling::li";
     }
 }
 

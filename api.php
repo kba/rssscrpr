@@ -11,32 +11,47 @@
  http://www.b-i-t-online.de/bitrss.xml
  mit "b.i.t.online - Ausgabe" anfangen herausfiltern
  auf Webseite verlinken
- 
+
  */
 
  /*
-Examples calls:
+ Examples calls:
 
-index.php?url=http://www.ub.uni-dortmund.de/listen/inetbib/date1.html&noanswers=true&nojobs
+ index.php?url=http://www.ub.uni-dortmund.de/listen/inetbib/date1.html&noanswers=true&nojobs
 
-index.php?url=http://www.handle.net/mail-archive/handle-info/
+ index.php?url=http://www.handle.net/mail-archive/handle-info/
 
-index.php?url=https://twitter.com/UBMannheim&nofb&noretweet
-index.php?url=https://twitter.com/hashtag/zotero
- */
- 
+ index.php?url=https://twitter.com/UBMannheim&nofb&noretweet
+ index.php?url=https://twitter.com/hashtag/zotero
+  */
+
 // TODO correct date handling (use DateTime)
 date_default_timezone_set('UTC');
 
+require_once 'src/Utils.php';
 require_once 'src/RetrieverFactory.php';
 
-$_GET['url'] = 'http://www.ub.uni-dortmund.de/listen/inetbib/date1.html#56142';
-// $_GET['url'] = 'https://twitter.com/UBMannheim';
-// $_GET['scraper'] = 'MHonArcScraper';
+function echoRSS($feed)
+{
+    $dom = $feed->asRSS();
+    $xml = $dom->saveXML();
+    header('Content-Type: application/rss+xml');
+    echo $xml;
+}
 
-$retriever = RetrieverFactory::createFromQueryParams($_GET);
-$feed = $retriever->go();
+if (!isset($_GET['action']))
+{
+    Utils::throw400("Must set 'action'!");
+}
 
-header('Content-Type: application/rss+xml');
-echo $feed->asRSS()->saveXML();
+if ($_GET['action'] === 'scrape-html')
+{
+    $retriever = RetrieverFactory::createHtmlScraperFromQueryParams($_GET);
+    $feed = $retriever->go();
+    echoRSS($feed);
+}
+else 
+{
+    Utils::throw400("Undefine action '{$_GET['action']}'!");
+}
 ?>

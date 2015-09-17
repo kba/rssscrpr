@@ -1,26 +1,17 @@
 <?php
 
-require_once 'src/Scraper.php';
+require_once 'src/scraper/XpathScraper.php';
 
-class TwitterScraper extends Scraper {
-
-    function scrape(Session $session)
+class TwitterScraper extends XpathScraper
+{
+    public function __construct()
     {
-        $elements = $session->xpath->query("//*[contains(@class, 'original-tweet')]");
-
-        foreach ($elements as $e)
-        {
-            $item = $session->feed->addItem();
-            $linkToMsg = $session->xpath->query(".//a[contains(@class, 'tweet-timestamp')]", $e)->item(0);
-            $item->url = $this->ensureAbsoluteUrl($linkToMsg->getAttribute('href'), $session->url);
-            $item->title = $session->xpath->query(".//p[contains(@class, 'TweetTextSize')]", $e)->item(0)->textContent;
-            $item->author = $session->xpath->query(".//strong[contains(@class, 'fullname')]", $e)->item(0)->textContent;
-            //TODO why is this not work as expected?
-            $item->date = $linkToMsg->getAttribute('data-original-title');
-            if ( $session->xpath->query(".//span[contains(@class, 'js-retweet-text')]", $e)->length > 0) {
-                $item->test = $session->xpath->query(".//span[contains(@class, 'js-retweet-text')]", $e)->item(0)->textContent;
-            }
-        }
+        $this->xpathItem = "//*[contains(@class, 'original-tweet')]";
+        $this->xpathTitle = ".//p[contains(@class, 'TweetTextSize')]/text()";
+        $this->xpathLink = ".//a[contains(@class, 'tweet-timestamp')]/@href";
+        $this->xpathAuthor = ".//strong[contains(@class, 'fullname')]/text()";
+        $this->xpathDate = ".//span[contains(@class, '_timestamp')]/@data-time";
+        $this->xpathTest = ".//span[contains(@class, 'js-retweet-text')]/text()";
     }
 }
 

@@ -4,9 +4,15 @@ require_once 'src/Fetcher.php';
 
 class HttpFetcher extends Fetcher
 {
+    protected function doFetch($url)
+    {
+        return file_get_contents($url);
+    }
+
+
     public function fetch(Session $session)
     {
-        $session->bytes = file_get_contents($session->url);
+        $session->bytes = $this->doFetch($session->url);
     }
 }
 

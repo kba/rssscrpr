@@ -39,7 +39,7 @@ class Session
         {
             throw new Error("BAD");
         }
- 
+
         $this->url = $url;
         $this->url_parts = parse_url($url);
         $this->feed = new Feed();
