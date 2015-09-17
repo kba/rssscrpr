@@ -6,6 +6,7 @@ require_once 'src/filter/SimpleFilter.php';
 require_once 'src/scraper/MHonArcScraper.php';
 require_once 'src/scraper/XpathScraper.php';
 require_once 'src/scraper/TwitterScraper.php';
+require_once 'src/scraper/TableScraper.php';
 require_once 'src/Utils.php';
 
 class RetrieverFactory
