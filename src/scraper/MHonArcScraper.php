@@ -4,6 +4,13 @@ require_once 'src/scraper/XpathScraper.php';
 
 class MHonArcScraper extends XpathScraper
 {
+
+    protected function scrapeDate($xpath, $e)
+    {
+        $scraped = parent::scrapeDate($xpath, $e);
+        return strtotime($scraped);
+    }
+
     public function __construct()
     {
         $this->xpathItem = "//ul/ul/li";

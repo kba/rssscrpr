@@ -11,7 +11,7 @@ class XpathScraper extends Scraper
     var $xpathAuthor = "";
     var $xpathDate = "";
 
-    private function getByXpath($session, $itemEl, $field)
+    protected function getByXpath($session, $itemEl, $field)
     {
         // error_log("Applying $field: {$this->$field}");
         $nodeList = $session->xpath->query($this->$field, $itemEl);
@@ -25,25 +25,37 @@ class XpathScraper extends Scraper
         }
     }
 
-    function scrape(Session $session)
+    protected function scrapeAuthor($session, $e)
+    {
+        return Utils::trimHard($this->getByXpath($session, $e, 'xpathAuthor'));
+    }
+
+    protected function scrapeDate($session, $e)
+    {
+        return Utils::trimHard($this->getByXpath($session, $e, 'xpathDate'));
+    }
+
+    protected function scrapeTitle($session, $e)
+    {
+        return $this->getByXpath($session, $e, 'xpathTitle');
+    }
+
+    protected function scrapeLink($session, $e)
+    {
+        return $this->getByXpath($session, $e, 'xpathLink');
+    }
+
+    public function scrape(Session $session)
     {
         $elements = $session->xpath->query($this->xpathItem);
 
         foreach ($elements as $e)
         {
             $item = $session->feed->addItem();
-
-            $item->title = $this->getByXpath($session, $e, 'xpathTitle');
-            $item->author = Utils::trimHard($this->getByXpath($session, $e, 'xpathAuthor'));
-            $item->url = Utils::ensureAbsoluteUrl($this->getByXpath($session, $e, 'xpathLink'), $session->url);
-            $date = Utils::trimHard($this->getByXpath($session, $e, 'xpathDate'));
-
-            // TODO
-            if (! preg_match('/^\d+$/', $date))
-            {
-                $date = strtotime($date);
-            }
-            $item->date = date(DATE_RFC822, $date);
+            $item->title = $this->scrapeTitle($session, $e);
+            $item->author = $this->scrapeAuthor($session, $e);
+            $item->url = Utils::ensureAbsoluteUrl($this->scrapeLink($session, $e), $session->url);
+            $item->date = date(DATE_RFC822, $this->scrapeDate($session, $e));
         }
     }
 }

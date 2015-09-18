@@ -83,7 +83,6 @@ class RetrieverFactory
                 }
             }
         }
-        error_log(json_encode($retriever->filter));
 
         return $retriever;
     }
