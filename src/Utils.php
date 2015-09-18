@@ -3,6 +3,11 @@
 class Utils
 {
 
+    static function contains($haystack, $needle)
+    {
+        return (strpos($haystack, $needle) !== false);
+    }
+
     static function startsWith($haystack, $needle)
     {
         $length = strlen($needle);

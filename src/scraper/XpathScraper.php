@@ -17,7 +17,7 @@ class XpathScraper extends Scraper
         $nodeList = $session->xpath->query($this->$field, $itemEl);
         if ($nodeList->length > 0)
         {
-            return $nodeList->item(0)->nodeValue;
+			return $nodeList->item(0)->textContent;
         }
         else
         {

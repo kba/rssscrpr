@@ -1,6 +1,5 @@
 <?php
 
-require_once 'src/model/FeedFilterConfig.php';
 require_once 'src/model/Feed.php';
 
 class Session
@@ -30,9 +29,6 @@ class Session
     // DOMXPath
     var $xpath;
 
-    // FeedFilterConfig
-    var $filter;
-
     function __construct($url)
     {
         if (!isset($url)) 
@@ -43,7 +39,6 @@ class Session
         $this->url = $url;
         $this->url_parts = parse_url($url);
         $this->feed = new Feed();
-        $this->filter = new FeedFilterConfig();
     }
 
 }
