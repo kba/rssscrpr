@@ -1,7 +1,7 @@
 <?php
 
 require_once 'src/fetcher/HttpFetcher.php';
-require_once 'src/parser/HtmlParser.php';
+require_once 'src/parser/DOMParser.php';
 require_once 'src/FeedFilter.php';
 
 class Retriever {
@@ -22,12 +22,12 @@ class Retriever {
     var $filter;
 
     // Inject the session + the tools
-    public function __construct(Session $session, $fetcher, $parser, $scraper, $filter) {
+    public function __construct(Session $session) {
         $this->session = $session;
-        $this->fetcher = $fetcher ?: new HttpFetcher();
-        $this->parser = $parser ?: new HtmlParser();
-        $this->scraper = $scraper ?: new XpathScraper();
-        $this->filter = $filter ?: new FeedFilter();
+        $this->fetcher = new HttpFetcher();
+        $this->parser =  new DOMParser();
+        $this->scraper = new XpathScraper();
+        $this->filter = new FeedFilter();
     }
 
     public function go()
@@ -35,6 +35,7 @@ class Retriever {
         $this->fetcher->fetch($this->session);
         $this->parser->parse($this->session);
         $this->scraper->scrape($this->session);
+        $this->session->feed->sort();
         $this->filter->filter($this->session);
         return $this->session->feed;
     }

@@ -2,8 +2,11 @@
 
 require_once 'src/Parser.php';
 
-class HtmlParser extends Parser
+class DOMParser extends Parser
 {
+
+    var $xpathOutgoing;
+
     public function parse(Session $session)
     {
         $session->dom = new DOMDocument();

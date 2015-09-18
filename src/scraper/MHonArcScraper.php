@@ -5,9 +5,9 @@ require_once 'src/scraper/XpathScraper.php';
 class MHonArcScraper extends XpathScraper
 {
 
-    protected function scrapeDate($xpath, $e)
+    function scrapeDate($session, $e)
     {
-        $scraped = parent::scrapeDate($xpath, $e);
+        $scraped = parent::scrapeDate($session, $e);
         return strtotime($scraped);
     }
 

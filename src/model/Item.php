@@ -42,7 +42,7 @@ class Item {
         $elem_item->appendChild($xml->createElement("link", htmlspecialchars($this->url)));
         $elem_item->appendChild($xml->createElement("description", htmlspecialchars($this->description)));
         $elem_item->appendChild($xml->createElement("author", htmlspecialchars($this->getAuthorWithEmail())));
-        $elem_item->appendChild($xml->createElement("date", htmlspecialchars($this->date)));
+        $elem_item->appendChild($xml->createElement("date", htmlspecialchars(date(DATE_RFC822, $this->date))));
     }
 }
 

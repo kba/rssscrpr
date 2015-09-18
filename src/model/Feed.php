@@ -67,6 +67,14 @@ class Feed {
         $xml->appendChild($elem_rss);
         $elem_rss->appendChild($elem_channel);
     }
+
+    public function sort()
+    {
+        error_log("SORTING");
+        uasort($this->items, function($a, $b) {
+            return ($a->date > $b->date) ? -1 : +1;
+        });
+    }
 }
- 
+
 ?>

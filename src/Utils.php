@@ -38,25 +38,50 @@ class Utils
         return $str;
     }
 
-    static function ensureAbsoluteUrl($url, $compareUrl)
+    static function monthNameToNumber($str)
     {
-        if (substr($url, 0, 4) == 'http') {
-            return $url;
-        } else {
-            $urlParsed = parse_url($compareUrl);
-            $result = $urlParsed['scheme'] .  '://' . $urlParsed['host'];
-            // TODO chomp trailing slashes and then implode for clarity
-            if ( strlen(dirname($urlParsed['path'])) > 1 && // i.e. not just /
-                substr($url, 0, 1) !== "/" ) {// 
-                if (substr($urlParsed['path'],-1) == "/") {
-                    $result .= $urlParsed['path'];
-                } else {
-                    $result .= dirname($urlParsed['path']) . '/';
-                }
-            }
-            return $result . $url;
+        $str = self::translateMonth($str);
+        $replacements = array(
+            "January" => '01',
+            "February" => '02',
+            "March" => '03',
+            "April" => '04',
+            "May" => '05',
+            "June" => '06',
+            "July" => '07',
+            "August" => '08',
+            "September" => '09',
+            "October" => '10',
+            "November" => '11',
+            "December" => '12',
+        );
+        foreach ($replacements as $de => $en)
+        {
+            $str = str_replace($de, $en, $str);
         }
+        return $str;
     }
+
+    static function translateMonth($str)
+    {
+        $replacements = array(
+            "Januar" => "January",
+            "Jänner" => "January",
+            "Februar" => "February",
+            "März" => "March",
+            "Mai" => "May",
+            "Juni" => "June",
+            "Juli" => "July",
+            "Oktober" => "October",
+            "Dezember" => "December"
+        );
+        foreach ($replacements as $de => $en)
+        {
+            $str = str_replace($de, $en, $str);
+        }
+        return $str;
+    }
+
 
 }
 

@@ -5,18 +5,30 @@ require_once 'src/fetcher/HttpFetcher.php';
 class CachingHttpFetcher extends HttpFetcher
 {
 
-    $config = json_decode(file_get_contents('config.json'));
+    // Maximum time to cache
+    var $maxCacheTime = 10 * 60;
+
+    private function ensureCacheDir($session)
+    {
+        if (! file_exists($session->config->cacheDir))
+        {
+            mkdir($session->config->cacheDir);
+        }
+    }
 
     public function fetch(Session $session)
     {
+        $this->ensureCacheDir($session);
         $urlMd5 = md5($session->url);
-        $cachedFile = $config->cacheDir . '/' . $urlMd5;
-        if (file_exists($cachedFile))
+        $cachedFile = $session->config->cacheDir . '/' . $urlMd5;
+        if (file_exists($cachedFile) && (time() - filemtime($cachedFile)) < $this->maxCacheTime)
         {
+            // error_log("FROM_CACHE");
             $session->bytes = file_get_contents($cachedFile);
         }
         else
         {
+            // error_log("RELOAD");
             $bytes = parent::doFetch($session->url);
             $session->bytes = $bytes;
             file_put_contents($cachedFile, $bytes);

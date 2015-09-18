@@ -2,10 +2,16 @@
 
 require_once 'src/Session.php';
 require_once 'src/Retriever.php';
+require_once 'src/fetcher/HttpFetcher.php';
+require_once 'src/fetcher/CachingHttpFetcher.php';
+require_once 'src/fetcher/FacebookFetcher.php';
+require_once 'src/parser/DOMParser.php';
+require_once 'src/parser/CrawlOutgoingDOMParser.php';
 require_once 'src/scraper/MHonArcScraper.php';
 require_once 'src/scraper/XpathScraper.php';
 require_once 'src/scraper/TwitterScraper.php';
-require_once 'src/scraper/TableScraper.php';
+require_once 'src/scraper/RektoratScraper.php';
+require_once 'src/scraper/RSSScraper.php';
 require_once 'src/Utils.php';
 
 class RetrieverFactory
@@ -24,17 +30,19 @@ class RetrieverFactory
             Utils::throw400("Must set 'url'.");
         }
 
-        if (! $queryParams['scraper'])
-        {
-            throw Utils::throw400("Must set 'scraper'.");
-        }
-
         // Create the session
         $session = new Session($queryParams['url']);
 
         // create a Retriever
-        $scraper = new $queryParams['scraper']();
-        $retriever = new Retriever($session, null, null, $scraper, null);
+        $retriever = new Retriever($session);
+        foreach (array('scraper', 'fetcher', 'parser') as $component)
+        {
+            if (! $queryParams[$component])
+            {
+                throw Utils::throw400("Must set '$component'.");
+            }
+            $retriever->$component = new $queryParams[$component]();
+        }
 
         // Setup filter
         if (array_key_exists('noanswers', $queryParams))

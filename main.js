@@ -3,53 +3,81 @@ var resultCounter = $("#results-found")
 var inputUrl = $("#input-group-url input");
 
 function syncFormEnable() {
-    $('input[type=checkbox][data-enable]').each(function() {
-        var checked = $(this).prop('checked');
-        var toggleName = $(this).attr('data-enable');
-        $('*[name=' + toggleName + ']').prop('disabled', !checked);
-        if (checked)
-            $('*[name=' + toggleName + ']').addClass('in');
-        else
-            $('*[name=' + toggleName + ']').removeClass('in');
-    });
+  $('input[type=checkbox][data-enable]').each(function() {
+    var checked = $(this).prop('checked');
+    var toggleName = $(this).attr('data-enable');
+    $('*[name=' + toggleName + ']').prop('disabled', !checked);
+    if (checked)
+      $('*[name=' + toggleName + ']').addClass('in');
+    else
+      $('*[name=' + toggleName + ']').removeClass('in');
+  });
+}
+
+function deserializeQueryString(url) {
+  var queryString = url.substring( url.indexOf('?') + 1 );
+
+  var obj = {};
+  var split = queryString.split('&')
+  for (var i = 0; i < split.length; i++) {
+    var kv = split[i].split('=');
+    var k = kv[0]
+    var v = decodeURIComponent(kv[1] ? kv[1].replace(/\+/g, ' ') : kv[1]);
+    if (v !== "")
+      obj[k] = v;
+  }
+  return obj;
+}
+
+function onClickImport(e) {
+  var qs = deserializeQueryString($("#import-feed input").val());
+  for (k in qs) {
+    var v = qs[k];
+    $("*[name='" + k + "']").val(v);
+    inputUrl.val(qs.url);
+  }
 }
 
 function onClickRun(e) {
-    var serializedForm = $('form#cyos-form').serialize();
-    resultList.empty();
-    resultCounter.html("0");
+  var serializedForm = $("form :input").filter(function(index, element) {
+    return $(element).val() != "";
+  }).serialize();
 
-    var uri = inputUrl.val();
-    var apiUri = 'api.php?url=' + encodeURIComponent(uri) + '&' + serializedForm;
+  resultList.empty();
+  resultCounter.html("0");
 
-    $("a#api-uri").attr('href', apiUri);
+  var uri = inputUrl.val();
+  var apiUri = 'api.php?url=' + encodeURIComponent(uri) + '&' + serializedForm;
 
-    $.get(apiUri, function(data) {
-        console.log(data);
-        resultCounter.html($('item', data).size());
-        var i = 1;
-        $('item', data).each(function() {
-            var itemDiv = $('<div class="panel panel-default"/>');
-            var itemLink = $("link", this).text();
-            itemDiv.append($("<div class='panel-heading'>")
-                .append(i++ + ". ").append($('title', this)));
-            itemDiv.append($("<div class='panel-body'>")
-                .append($("<a>").append(itemLink).attr('href', itemLink))
-                .append($("<br>"))
-                .append($('date', this))
-                .append($("<br>"))
-                .append($("<span>").append($('author', this)))
-                .append($("<br>"))
-                .append($("<p>").append($('description', this))));
-            resultList.append(itemDiv);
-        });
-    }).error(function(x) {
-        alert(x.responseText);
+  $("a#api-uri").attr('href', apiUri);
+
+  $.get(apiUri, function(data) {
+    console.log(data);
+    resultCounter.html($('item', data).size());
+    var i = 1;
+    $('item', data).each(function() {
+      var itemDiv = $('<div class="panel panel-default"/>');
+      var itemLink = $("link", this).text();
+      itemDiv.append($("<div class='panel-heading'>")
+        .append(i++ + ". ").append($('title', this)));
+      itemDiv.append($("<div class='panel-body'>")
+        .append($("<a>").append(itemLink).attr('href', itemLink))
+        .append($("<br>"))
+        .append($('date', this))
+        .append($("<br>"))
+        .append($("<span>").append($('author', this)))
+        .append($("<br>"))
+        .append($("<p>").append($('description', this))));
+      resultList.append(itemDiv);
     });
+  }).error(function(x) {
+    alert(x.responseText);
+  });
 }
 
-function setExampleUrl() {
-    inputUrl.val($(this).attr('data-example-url'));
+function loadExample() {
+  $("#import-feed input").val($(this).attr('data-example-url'))
+  onClickImport();
 }
 
 
@@ -60,7 +88,9 @@ $("input").on('click', syncFormEnable);
 
 $("#input-group-url button").on('click', onClickRun);
 
-$("a[data-example-url]").on('click', setExampleUrl);
+$("a[data-example-url]").on('click', loadExample);
+
+$("#import-feed button").on('click', onClickImport);
 
 /*
  * Run once at load

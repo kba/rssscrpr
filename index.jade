@@ -28,6 +28,14 @@ html
 				form#cyos-form
 					input(type='hidden', name='action', value='scrape-html')
 					.col-md-4
+						.panel.panel-default
+							.panel-heading
+								| Edit Feed
+							.panel-body
+								.input-group#import-feed
+									input.form-control(type='url', placeholder='Hier die URL')
+									span.input-group-btn
+										button.btn.btn-info(type="button") Import
 						#results.panel-group
 
 							.panel.panel-default
@@ -37,24 +45,46 @@ html
 								#componentsCollapsible.collapse.in
 									.panel-body
 										.form-group
-											input(type='checkbox', data-enable='fetcher')
 											label(for='inputFetcher') Fetcher
-											select.form-control(name='fetcher', disabled='')
+											select.form-control(name='fetcher')
 												option HttpFetcher
-												option CachingHttpFetcher
+												option(selected=true) CachingHttpFetcher
+												option FacebookFetcher
+											input(type='checkbox', data-enable='fetcher-customize')
+											| Customize
+											.collapse.in(name='fetcher-customize')
+												.panel.panel-default
+													.panel-body
+														.form-group
+															label(for='fetcher_maxCacheTime') Maximum cache age in seconds
+															input.form-control(type="number", value="600", name='fetcher_maxCacheTime', placeholder="Maximum cache age in seconds")
 										.form-group
-											input(type='checkbox', data-enable='parser')
 											label(for='inputParser') Parser
-											select.form-control(name='parser', disabled='')
-												option HtmlParser
+											select.form-control(name='parser')
+												option(selected=true) DOMParser
+												option CrawlOutgoingDOMParser
+											input(type='checkbox', data-enable='parser-customize')
+											| Customize
+											.collapse.in(name='parser-customize')
+												.panel.panel-default
+													.panel-body
+														.form-group
+															label(for='parser_maxRecursion') Maximum number of recursion steps
+															input.form-control(type="number", name='parser_maxRecursion', placeholder="")
+														.form-group
+															label(for='parser_xpathOutgoing') XPath for outgoing links to be merged
+															input.form-control(type="text", name='parser_xpathOutgoing', placeholder="")
+														.form-group
+															label(for='parser_xpathNextPage') XPath for sequential links to be followed
+															input.form-control(type="text", name='parser_xpathNextPage', placeholder="")
 										.form-group
-											input(type='checkbox', data-enable='scraper')
 											label(for='scraper') Scraper
-											select#scraper.form-control(name='scraper', disabled='')
-												option(default='') XpathScraper
+											select#scraper.form-control(name='scraper')
+												option(selected='') XpathScraper
 												option MHonArcScraper
 												option TwitterScraper
-												option TableScraper
+												option RektoratScraper
+												option RSSScraper
 											input(type='checkbox', data-enable='scraper-customize')
 											| Customize
 											.collapse.in(name='scraper-customize')
@@ -75,6 +105,9 @@ html
 														.form-group
 															label(for='scraper_xpathDate') Date xpath
 															input.form-control(type="text", name='scraper_xpathDate', placeholder="xpath for the date")
+														.form-group
+															label(for='scraper_xpathDescription') Description xpath
+															input.form-control(type="text", name='scraper_xpathDescription', placeholder="xpath for the Description")
 
 							.panel.panel-default
 								.panel-heading
@@ -149,11 +182,16 @@ html
 					#results.panel.panel-default
 						.panel-heading Results
 						.panel-body
-							a(data-example-url='http://www.ub.uni-dortmund.de/listen/inetbib/date1.html#56142') Bsp. Inetbib
+							a(data-example-url='http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fwww.ub.uni-dortmund.de%2Flisten%2Finetbib%2Fdate1.html%2356142&action=scrape-html&fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&parser=DOMParser&scraper=MHonArcScraper&filter_maxResult=30&noanswers=on&nojobs=on')
+								| Bsp. Inetbib
 							| |
-							a(data-example-url='https://twitter.com/UBMannheim') Bsp. Twitter
+							a(data-example-url='http://example.org/?url=https%3A%2F%2Ftwitter.com%2FUBMannheim&action=scrape-html&fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&parser=DOMParser&parser_xpathOutgoing=%2F%2Fli%2Fa%2F%40href&scraper=TwitterScraper&nofb=on')
+								|Bsp. Twitter
 							| |
-							a(data-example-url='http://intranet.verwaltung.uni-mannheim.de/intranet/dez_vi/organisation/rektoratsnachrichten/2015/index.html') Bspw Rektoratsnachrichten
+							a(data-example-url='http://example.org/?url=http%3A%2F%2Fintranet.verwaltung.uni-mannheim.de%2Fintranet%2Fdez_vi%2Forganisation%2Frektoratsnachrichten%2Findex.html&action=scrape-html&fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&parser=CrawlOutgoingDOMParser&parser_maxRecursion=6&parser_xpathOutgoing=%2F%2Fli%2Fa%2F%40href&scraper=RektoratScraper')
+								| Bsp Rektoratsnachrichten
+							a(data-example-url='http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fwww.belwue.de%2Findex.php%3Ftype%3D100%26tx_ttnews%5Bcat%5D%3D5&action=scrape-html&fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&parser=DOMParser&scraper=RSSScraper&filter_include_title=Strom')
+								| Bspw. RSS-Feed
 							#input-group-url.input-group
 								input#inputUrl.form-control(type='text', placeholder='Hier die URL')
 								span.input-group-btn

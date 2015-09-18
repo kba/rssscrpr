@@ -5,11 +5,11 @@ require_once 'src/Scraper.php';
 class XpathScraper extends Scraper 
 {
 
-    var $xpathItem = "";
-    var $xpathTitle = "";
-    var $xpathLink = "";
-    var $xpathAuthor = "";
-    var $xpathDate = "";
+    var $xpathItem;
+    var $xpathTitle;
+    var $xpathLink;
+    var $xpathAuthor;
+    var $xpathDate;
 
     protected function getByXpath($session, $itemEl, $field)
     {
@@ -17,46 +17,44 @@ class XpathScraper extends Scraper
         $nodeList = $session->xpath->query($this->$field, $itemEl);
         if ($nodeList->length > 0)
         {
-			return $nodeList->item(0)->textContent;
+            return $nodeList->item(0)->textContent;
         }
-        else
+        // return 'ER<font color=RED>RO</font>RR';
+    }
+
+    function scrapeAuthor($session, $e)
+    {
+        $s = Utils::trimHard($this->getByXpath($session, $e, 'xpathAuthor'));
+        if (!$s)
         {
-            return 'ERROR<font color=RED>ERROR</font>';
+            $s = 'Anonymous';
         }
+        return $s;
     }
 
-    protected function scrapeAuthor($session, $e)
+    function scrapeDate($session, $e)
     {
-        return Utils::trimHard($this->getByXpath($session, $e, 'xpathAuthor'));
+        $s = Utils::trimHard($this->getByXpath($session, $e, 'xpathDate'));
+        if (! is_numeric($s))
+        {
+            $s = strtotime($s);
+        }
+        return $s;
     }
 
-    protected function scrapeDate($session, $e)
-    {
-        return Utils::trimHard($this->getByXpath($session, $e, 'xpathDate'));
-    }
-
-    protected function scrapeTitle($session, $e)
+    function scrapeTitle($session, $e)
     {
         return $this->getByXpath($session, $e, 'xpathTitle');
     }
 
-    protected function scrapeLink($session, $e)
+    function scrapeLink($session, $e)
     {
         return $this->getByXpath($session, $e, 'xpathLink');
     }
 
-    public function scrape(Session $session)
+    function scrapeItems($session)
     {
-        $elements = $session->xpath->query($this->xpathItem);
-
-        foreach ($elements as $e)
-        {
-            $item = $session->feed->addItem();
-            $item->title = $this->scrapeTitle($session, $e);
-            $item->author = $this->scrapeAuthor($session, $e);
-            $item->url = Utils::ensureAbsoluteUrl($this->scrapeLink($session, $e), $session->url);
-            $item->date = date(DATE_RFC822, $this->scrapeDate($session, $e));
-        }
+        return $session->xpath->query($this->xpathItem);
     }
 }
 
