@@ -7,7 +7,7 @@ class TwitterScraper extends XpathScraper
     public function __construct()
     {
         $this->xpathItem = "//*[contains(@class, 'original-tweet')]";
-        $this->xpathTitle = ".//p[contains(@class, 'TweetTextSize')]/text()";
+        $this->xpathTitle = ".//p[contains(@class, 'TweetTextSize')]";
         $this->xpathLink = ".//a[contains(@class, 'tweet-timestamp')]/@href";
         $this->xpathAuthor = ".//strong[contains(@class, 'fullname')]/text()";
         $this->xpathDate = ".//span[contains(@class, '_timestamp')]/@data-time";

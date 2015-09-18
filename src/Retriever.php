@@ -2,8 +2,7 @@
 
 require_once 'src/fetcher/HttpFetcher.php';
 require_once 'src/parser/HtmlParser.php';
-require_once 'src/filter/NopFilter.php';
-require_once 'src/filter/SimpleFilter.php';
+require_once 'src/FeedFilter.php';
 
 class Retriever {
 
@@ -27,8 +26,8 @@ class Retriever {
         $this->session = $session;
         $this->fetcher = $fetcher ?: new HttpFetcher();
         $this->parser = $parser ?: new HtmlParser();
-        $this->scraper = $scraper ?: new MHonArcScraper();
-        $this->filter = $filter ?: new SimpleFilter();
+        $this->scraper = $scraper ?: new XpathScraper();
+        $this->filter = $filter ?: new FeedFilter();
     }
 
     public function go()

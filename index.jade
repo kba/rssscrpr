@@ -84,10 +84,10 @@ html
 									.panel-body
 										.form-group
 											label(for='maxResult') Maximum results
-											input.form-control(type="number", name='maxResult', placeholder="maximum results")
+											input.form-control(type="number", name='filter_maxResult', placeholder="maximum results")
 										.form-group
 											label(for='maxAge') Maximum age
-											input.form-control(type="number", name='maxAge', placeholder="age in days")
+											input.form-control(type="number", name='filter_maxAge', placeholder="age in days")
 										.panel-group
 										.panel.panel-default
 											.panel-heading
@@ -120,14 +120,14 @@ html
 											#includeFiltersCollapsible.collapse
 												.panel-body
 													.form-group
-														label(for='include_title') Title
-														input.form-control(name='include_title')
+														label(for='filter_include_title') Title
+														input.form-control(name='filter_include_title')
 													.form-group
-														label(for='include_description') Description
-														input.form-control(name='include_description')
+														label(for='filter_include_description') Description
+														input.form-control(name='filter_include_description')
 													.form-group
-														label(for='include_test') Test
-														input.form-control(name='include_test')
+														label(for='filter_include_test') Test
+														input.form-control(name='filter_include_test')
 
 										.panel.panel-default
 											.panel-heading
@@ -136,14 +136,14 @@ html
 											#excludeFiltersCollapsible.collapse
 												.panel-body
 													.form-group
-														label(for='exclude_title') Title
-														input.form-control(name='exclude_title')
+														label(for='filter_exclude_title') Title
+														input.form-control(name='filter_exclude_title')
 													.form-group
-														label(for='exclude_description') Description
-														input.form-control(name='exclude_description')
+														label(for='filter_exclude_description') Description
+														input.form-control(name='filter_exclude_description')
 													.form-group
-														label(for='exclude_test') Test
-														input.form-control(name='exclude_test')
+														label(for='filter_exclude_test') Test
+														input.form-control(name='filter_exclude_test')
 
 				.col-md-8
 					#results.panel.panel-default
