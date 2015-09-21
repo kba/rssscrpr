@@ -12,10 +12,10 @@ class RektoratScraper extends XpathScraper
     }
     public function scrapeDate($session, $e)
     {
-        $s = parent::scrapeDate($session, $e);
-        $s = preg_replace('/[^0-9]*Teil.*$/', '', $s);
+        $s = parent::scrapeTitle($session, $e);
         if (preg_match('/\svom\s/', $s))
         {
+            $s = preg_replace('/[^0-9]*Teil.*$/', '', $s);
             $s = preg_replace('/.*vom\s*/', '', $s);
             $s = preg_replace('/\./', '', $s);
             $s = Utils::monthNameToNumber($s);
@@ -29,6 +29,7 @@ class RektoratScraper extends XpathScraper
         }
         else
         {
+            error_log($s);
             preg_match('/(\d{2})[-\s]+(\d{4})/', $s, $matches);
             $num = $matches[1];
             $year = $matches[2];
@@ -41,8 +42,6 @@ class RektoratScraper extends XpathScraper
         $this->xpathItem = "//table/tr";
         $this->xpathTitle = "./td/text()";
         $this->xpathLink = ".//a/@href";
-        $this->xpathAuthor = "";
-        $this->xpathDate = "./td/text()";
     }
 }
 
