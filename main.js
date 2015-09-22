@@ -1,6 +1,7 @@
 var resultList = $("div#result-list");
 var resultCounter = $("#results-found")
 var inputUrl = $("#input-group-url input");
+var runButton = $("#input-group-url button");
 
 function syncFormEnable() {
   $('input[type=checkbox][data-enable]').each(function() {
@@ -29,6 +30,18 @@ function deserializeQueryString(url) {
   return obj;
 }
 
+function toggleProcessing(suc) {
+  runButton.toggleClass("running");
+  if (runButton.hasClass("running")) {
+    runButton.empty().append('<i class="fa fa-refresh fa-spin"></i>');
+  } else {
+    runButton.empty().append("Go!");
+  }
+  if (! suc)
+    return;
+  inputUrl.parent().removeClass('has-error').removeClass('has-success').addClass('has-' + suc);
+}
+
 function onClickImport(e) {
   var qs = deserializeQueryString($("#import-feed input").val());
   for (k in qs) {
@@ -42,6 +55,7 @@ function onClickRun(e) {
   var serializedForm = $("form :input").filter(function(index, element) {
     return $(element).val() != "";
   }).serialize();
+  toggleProcessing();
 
   resultList.empty();
   resultCounter.html("0");
@@ -52,6 +66,7 @@ function onClickRun(e) {
   $("a#api-uri").attr('href', apiUri);
 
   $.get(apiUri, function(data) {
+    toggleProcessing('success');
     console.log(data);
     resultCounter.html($('item', data).size());
     var i = 1;
@@ -71,6 +86,7 @@ function onClickRun(e) {
       resultList.append(itemDiv);
     });
   }).error(function(x) {
+    toggleProcessing('error');
     alert(x.responseText);
   });
 }
@@ -86,7 +102,7 @@ function loadExample() {
  */
 $("input").on('click', syncFormEnable);
 
-$("#input-group-url button").on('click', onClickRun);
+runButton.on('click', onClickRun);
 
 $("a[data-example-url]").on('click', loadExample);
 

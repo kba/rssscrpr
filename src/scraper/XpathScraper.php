@@ -61,7 +61,7 @@ class XpathScraper extends Scraper
     {
         if (!$this->xpathDescription)
         {
-            return scrapeTitle($session, $e);
+            return $this->scrapeTitle($session, $e);
         }
         return $this->getByXpath($session, $e, 'xpathDescription');
     }
