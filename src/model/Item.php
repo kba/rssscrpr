@@ -53,7 +53,7 @@ class Item {
         $elem_item->appendChild($xml->createElement("description"))->appendChild($fragment);
 
         $elem_item->appendChild($xml->createElement("author", htmlspecialchars($this->getAuthorWithEmail())));
-        $elem_item->appendChild($xml->createElement("date", htmlspecialchars(date(DATE_RFC822, $this->date))));
+        $elem_item->appendChild($xml->createElement("pubDate", htmlspecialchars(date(DATE_RFC822, $this->date))));
     }
 }
 
