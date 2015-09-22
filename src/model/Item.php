@@ -34,13 +34,24 @@ class Item {
         return sprintf("%s (%s)", $this->author, $this->email);
     }
 
+    // private final function createCDATA($xml, $elName, $data)
+    // {
+        // $cd =  $xml->createCDATASection($data);
+        // $node = $xml->createElement($elName, $cd);
+        // return $node;
+    // }
+
     public function toRSS(DOMElement $elem_item)
     {
         $xml = $elem_item->ownerDocument;
         $elem_item->appendChild($xml->createElement("title", htmlspecialchars($this->title)));
         $elem_item->appendChild($xml->createElement("guid", htmlspecialchars($this->url)));
         $elem_item->appendChild($xml->createElement("link", htmlspecialchars($this->url)));
-        $elem_item->appendChild($xml->createElement("description", htmlspecialchars($this->description)));
+
+        $fragment = $xml->createDocumentFragment();
+        $fragment->appendXML($this->description);
+        $elem_item->appendChild($xml->createElement("description"))->appendChild($fragment);
+
         $elem_item->appendChild($xml->createElement("author", htmlspecialchars($this->getAuthorWithEmail())));
         $elem_item->appendChild($xml->createElement("date", htmlspecialchars(date(DATE_RFC822, $this->date))));
     }

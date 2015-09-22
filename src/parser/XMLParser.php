@@ -2,15 +2,20 @@
 
 require_once 'src/Parser.php';
 
-class DOMParser extends Parser
+class XMLParser extends Parser
 {
 
     var $xpathOutgoing;
 
+    public function parseDOM(Session $session)
+    {
+        $session->dom->loadXML($session->bytes);
+    }
+
     public function parse(Session $session)
     {
         $session->dom = new DOMDocument();
-        $session->dom->loadXML($session->bytes);
+        $this->parseDOM($session);
         $session->xpath = new DOMXPath($session->dom);
     }
 }

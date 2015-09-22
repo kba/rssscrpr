@@ -74,15 +74,15 @@ function onClickRun(e) {
       var itemDiv = $('<div class="panel panel-default"/>');
       var itemLink = $("link", this).text();
       itemDiv.append($("<div class='panel-heading'>")
-        .append(i++ + ". ").append($('title', this)));
+        .append(i++ + ". ").append($('title', this).html()));
       itemDiv.append($("<div class='panel-body'>")
-        .append($("<a>").append(itemLink).attr('href', itemLink))
+        .append("<b>Link: </b>").append($("<a>").append(itemLink).attr('href', itemLink))
         .append($("<br>"))
-        .append($('date', this))
+        .append("<b>Date: </b>").append($('date', this).html())
         .append($("<br>"))
-        .append($("<span>").append($('author', this)))
+        .append("<b>Author: </b>").append($("<span>").append($('author', this).html()))
         .append($("<br>"))
-        .append($("<p>").append($('description', this))));
+        .append("<b>Description: </b>").append($("<p>").append($('description', this).html())));
       resultList.append(itemDiv);
     });
   }).error(function(x) {

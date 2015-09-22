@@ -13,9 +13,9 @@ abstract class Scraper
 
     public function scrape(Session $session)
     {
-        error_log($session->dom->save('/tmp/fb.html'));
+        // error_log($session->dom->save('/tmp/fb.html'));
         $items = $this->scrapeItems($session);
-        error_log("Scraped " . count($items) . " items");
+        // error_log("Scraped " . count($items) . " items");
         if ($items === false)
         {
             throw Utils::throw400("Couldn't determine what the items are...");

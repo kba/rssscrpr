@@ -1,6 +1,7 @@
 <?php
 
 require_once 'src/Scraper.php';
+require_once 'src/Utils.php';
 
 class XpathScraper extends Scraper 
 {
@@ -14,14 +15,14 @@ class XpathScraper extends Scraper
 
     protected function getByXpath($session, $itemEl, $field)
     {
-        error_log("Applying $field: '{$this->$field}'");
+        // error_log("Applying $field: '{$this->$field}'");
         $xpath = $this->$field;
         if (! $xpath)
             return "NONE";
         $nodeList = $session->xpath->query($this->$field, $itemEl);
         if ($nodeList->length > 0)
         {
-            error_log("TEXT of {$field}: " . $nodeList->item(0)->textContent);
+            // error_log("TEXT of {$field}: " . $nodeList->item(0)->textContent);
             return $nodeList->item(0)->textContent;
         }
         // return 'ER<font color=RED>RO</font>RR';
@@ -60,11 +61,29 @@ class XpathScraper extends Scraper
 
     function scrapeDescription($session, $e)
     {
+        $xpathToUse = $this->xpathDescription;
         if (!$this->xpathDescription)
         {
-            return $this->scrapeTitle($session, $e);
+            $xpathToUse = $this->xpathTitle;
         }
-        return $this->getByXpath($session, $e, 'xpathDescription');
+        $node = $session->xpath->query($xpathToUse, $e)->item(0);
+        if ($node)
+        {
+            $ret = "";
+            if (! $node->childNodes)
+            {
+                $ret = $node->textContent;
+            }
+            else
+            {
+                foreach ($node->childNodes as $childNode)
+                {
+                    $ret .= $node->ownerDocument->saveXML($childNode);
+                }
+            }
+            return $ret;
+        }
+        Utils::throw400("Could not scrape description, check your xpath");
     }
 
     function scrapeItems($session)

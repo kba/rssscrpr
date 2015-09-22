@@ -1,8 +1,9 @@
 <?php
 
 require_once 'src/Utils.php';
+require_once 'src/parser/HTMLParser.php';
 
-class CrawlOutgoingDOMParser extends DOMParser
+class CrawlOutgoingHTMLParser extends HTMLParser
 {
 
     var $xpathOutgoing;
@@ -40,7 +41,7 @@ class CrawlOutgoingDOMParser extends DOMParser
 
             $subsession = new Session($outgoingLink);
             $subfetcher = new CachingHttpFetcher();
-            $subparser = new DOMParser();
+            $subparser = new HTMLParser();
             $subfetcher->fetch($subsession);
             $subparser->parse($subsession);
             $newBody = $session->dom->importNode($subsession->dom->getElementsByTagName('body')->item(0), true);
