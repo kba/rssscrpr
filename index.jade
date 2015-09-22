@@ -85,6 +85,7 @@ html
 												option TwitterScraper
 												option RektoratScraper
 												option RSSScraper
+												option FacebookScraper
 											input(type='checkbox', data-enable='scraper-customize')
 											| Customize
 											.collapse.in(name='scraper-customize')
@@ -182,16 +183,21 @@ html
 					#results.panel.panel-default
 						.panel-heading Results
 						.panel-body
+							| Beispiele: 
 							a(data-example-url='http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fwww.ub.uni-dortmund.de%2Flisten%2Finetbib%2Fdate1.html%2356142&action=scrape-html&fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&parser=DOMParser&scraper=MHonArcScraper&filter_maxResult=30&noanswers=on&nojobs=on')
-								| Bsp. Inetbib
-							| |
+								| Inetbib
+							|&nbsp;|&nbsp;
 							a(data-example-url='http://example.org/?url=https%3A%2F%2Ftwitter.com%2FUBMannheim&action=scrape-html&fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&parser=DOMParser&parser_xpathOutgoing=%2F%2Fli%2Fa%2F%40href&scraper=TwitterScraper&nofb=on')
-								|Bsp. Twitter
-							| |
+								| Twitter
+							|&nbsp;|&nbsp;
 							a(data-example-url='http://example.org/?url=http%3A%2F%2Fintranet.verwaltung.uni-mannheim.de%2Fintranet%2Fdez_vi%2Forganisation%2Frektoratsnachrichten%2Findex.html&action=scrape-html&fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&parser=CrawlOutgoingDOMParser&parser_maxRecursion=6&parser_xpathOutgoing=%2F%2Fli%2Fa%2F%40href&scraper=RektoratScraper')
-								| Bsp Rektoratsnachrichten
+								| Rektoratsnachrichten
+							|&nbsp;|&nbsp;
 							a(data-example-url='http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fwww.belwue.de%2Findex.php%3Ftype%3D100%26tx_ttnews%5Bcat%5D%3D5&action=scrape-html&fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&parser=DOMParser&scraper=RSSScraper&filter_include_title=Strom')
-								| Bspw. RSS-Feed
+								| RSS-Feed
+							|&nbsp;|&nbsp;
+							a(data-example-url='http://example.org/api.php?url=https%3A%2F%2Fwww.facebook.com%2FUBMannheim&action=scrape-html&fetcher=FacebookFetcher&fetcher_maxCacheTime=600&parser=DOMParser&scraper=FacebookScraper')
+								| Facebook
 							#input-group-url.input-group
 								input#inputUrl.form-control(type='text', placeholder='Hier die URL')
 								span.input-group-btn

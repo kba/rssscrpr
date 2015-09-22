@@ -12,6 +12,7 @@ require_once 'src/scraper/XpathScraper.php';
 require_once 'src/scraper/TwitterScraper.php';
 require_once 'src/scraper/RektoratScraper.php';
 require_once 'src/scraper/RSSScraper.php';
+require_once 'src/scraper/FacebookScraper.php';
 require_once 'src/Utils.php';
 
 class RetrieverFactory

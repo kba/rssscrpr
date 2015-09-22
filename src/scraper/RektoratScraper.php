@@ -29,7 +29,6 @@ class RektoratScraper extends XpathScraper
         }
         else
         {
-            error_log($s);
             preg_match('/(\d{2})[-\s]+(\d{4})/', $s, $matches);
             $num = $matches[1];
             $year = $matches[2];

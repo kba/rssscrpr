@@ -9,11 +9,12 @@ abstract class Scraper
     abstract function scrapeAuthor($session, $itemEl);
     abstract function scrapeLink($session, $itemEl);
     abstract function scrapeDate($session, $itemEl);
+    abstract function scrapeDescription($session, $itemEl);
 
     public function scrape(Session $session)
     {
         error_log($session->dom->save('/tmp/fb.html'));
-        $items = @$this->scrapeItems($session);
+        $items = $this->scrapeItems($session);
         error_log("Scraped " . count($items) . " items");
         if ($items === false)
         {
@@ -26,6 +27,7 @@ abstract class Scraper
             $item->author = $this->scrapeAuthor($session, $e);
             $item->url = $session->ensureAbsoluteUrl($this->scrapeLink($session, $e), $session->url);
             $item->date = $this->scrapeDate($session, $e);
+            $item->description = $this->scrapeDescription($session, $e);
         }
     }
 }

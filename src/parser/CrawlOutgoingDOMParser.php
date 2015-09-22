@@ -43,7 +43,7 @@ class CrawlOutgoingDOMParser extends DOMParser
             $subparser = new DOMParser();
             $subfetcher->fetch($subsession);
             $subparser->parse($subsession);
-            @$newBody = $session->dom->importNode($subsession->dom->getElementsByTagName('body')->item(0), true);
+            $newBody = $session->dom->importNode($subsession->dom->getElementsByTagName('body')->item(0), true);
             $session->dom->documentElement->appendChild($newBody);
         }
         $session->xpath = new DOMXPath($session->dom);
