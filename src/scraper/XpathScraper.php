@@ -14,13 +14,14 @@ class XpathScraper extends Scraper
 
     protected function getByXpath($session, $itemEl, $field)
     {
-        error_log("Applying $field: {$this->$field}");
+        error_log("Applying $field: '{$this->$field}'");
         $xpath = $this->$field;
         if (! $xpath)
             return "NONE";
         $nodeList = $session->xpath->query($this->$field, $itemEl);
         if ($nodeList->length > 0)
         {
+            error_log("TEXT of {$field}: " . $nodeList->item(0)->textContent);
             return $nodeList->item(0)->textContent;
         }
         // return 'ER<font color=RED>RO</font>RR';
@@ -28,7 +29,7 @@ class XpathScraper extends Scraper
 
     function scrapeAuthor($session, $e)
     {
-        $s = Utils::trimHard($this->getByXpath($session, $e, 'xpathAuthor'));
+        $s = $this->getByXpath($session, $e, 'xpathAuthor');
         if (!$s)
         {
             $s = 'Anonymous';

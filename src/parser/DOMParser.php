@@ -10,7 +10,7 @@ class DOMParser extends Parser
     public function parse(Session $session)
     {
         $session->dom = new DOMDocument();
-        $session->dom->loadHTML($session->bytes);
+        $session->dom->loadXML($session->bytes);
         $session->xpath = new DOMXPath($session->dom);
     }
 }

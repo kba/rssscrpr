@@ -8,11 +8,11 @@ class RSSScraper extends XpathScraper
     function __construct()
     {
         $this->xpathItem = '//item';
-        $this->xpathTitle = 'title';
-        $this->xpathLink = 'link';
-        $this->xpathDate = 'pubdate';
-        $this->xpathAuthor = 'author';
-        $this->xpathDescription = 'description';
+        $this->xpathTitle = './/title';
+        $this->xpathLink = './/link';
+        $this->xpathDate = './/pubDate';
+        $this->xpathAuthor = './/author/text()';
+        $this->xpathDescription = './/description';
     }
 
 }
