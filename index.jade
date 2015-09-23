@@ -94,6 +94,15 @@ html
 												.panel.panel-default
 													.panel-body
 														.form-group
+															label(for='scraper_feedTitle') Feed title
+															input.form-control(type="text", name='scraper_feedTitle', placeholder="Feed title")
+														.form-group
+															label(for='scraper_feedDescription') Feed Description
+															input.form-control(type="text", name='scraper_feedDescription', placeholder="Feed Description")
+														.form-group
+															label(for='scraper_feedLink') Feed title
+															input.form-control(type="text", name='scraper_feedLink', placeholder="xpath for the title")
+														.form-group
 															label(for='scraper_xpathItem') Item xpath
 															input.form-control(type="text", name='scraper_xpathItem', placeholder="xpath for the item")
 														.form-group
@@ -186,19 +195,19 @@ html
 						.panel-heading Results
 						.panel-body
 							| Beispiele: 
-							a(data-example-url='http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fwww.ub.uni-dortmund.de%2Flisten%2Finetbib%2Fdate1.html%2356142&action=scrape-html&fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&parser=HTMLParser&scraper=MHonArcScraper&filter_maxResult=30&noanswers=on&nojobs=on')
+							a(data-example-url='http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fwww.ub.uni-dortmund.de%2Flisten%2Finetbib%2Fdate1.html%2356142&action=scrape-html&fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&parser=HTMLParser&scraper=MHonArcScraper&scraper_feedTitle=Inetbib+Neueste+Beitraege&filter_maxResult=30')
 								| Inetbib
 							|&nbsp;|&nbsp;
-							a(data-example-url='http://example.org/?url=https%3A%2F%2Ftwitter.com%2FUBMannheim&action=scrape-html&fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&parser=HTMLParser&parser_xpathOutgoing=%2F%2Fli%2Fa%2F%40href&scraper=TwitterScraper&nofb=on')
+							a(data-example-url='http://example.org/?url=https%3A%2F%2Ftwitter.com%2FUBMannheim&action=scrape-html&fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&parser=HTMLParser&parser_xpathOutgoing=%2F%2Fli%2Fa%2F%40href&scraper=TwitterScraper&nofb=on&scraper_feedTitle=Tweets+der+UBMannheim')
 								| Twitter
 							|&nbsp;|&nbsp;
-							a(data-example-url='http://example.org/?url=http%3A%2F%2Fintranet.verwaltung.uni-mannheim.de%2Fintranet%2Fdez_vi%2Forganisation%2Frektoratsnachrichten%2Findex.html&action=scrape-html&fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&parser=CrawlOutgoingHTMLParser&parser_maxRecursion=6&parser_xpathOutgoing=%2F%2Fli%2Fa%2F%40href&scraper=RektoratScraper')
+							a(data-example-url='http://example.org/?url=http%3A%2F%2Fintranet.verwaltung.uni-mannheim.de%2Fintranet%2Fdez_vi%2Forganisation%2Frektoratsnachrichten%2Findex.html&action=scrape-html&fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&parser=CrawlOutgoingHTMLParser&parser_maxRecursion=6&parser_xpathOutgoing=%2F%2Fli%2Fa%2F%40href&scraper=RektoratScraper&scraper_feedTitle=Rektoratsnachrichten')
 								| Rektoratsnachrichten
 							|&nbsp;|&nbsp;
-							a(data-example-url='http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fwww.belwue.de%2Findex.php%3Ftype%3D100%26tx_ttnews%5Bcat%5D%3D5&action=scrape-html&fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&parser=XMLParser&scraper=RSSScraper&filter_include_title=Strom')
+							a(data-example-url='http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fwww.belwue.de%2Findex.php%3Ftype%3D100%26tx_ttnews%5Bcat%5D%3D5&action=scrape-html&fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&parser=XMLParser&scraper=RSSScraper&filter_include_title=Strom&scraper_feedTitle=Stoerungen+in+BaWue')
 								| RSS-Feed
 							|&nbsp;|&nbsp;
-							a(data-example-url='http://example.org/api.php?url=https%3A%2F%2Fwww.facebook.com%2FUBMannheim&action=scrape-html&fetcher=FacebookFetcher&fetcher_maxCacheTime=600&parser=HTMLParser&scraper=FacebookScraper')
+							a(data-example-url='http://example.org/api.php?url=https%3A%2F%2Fwww.facebook.com%2FUBMannheim&action=scrape-html&fetcher=FacebookFetcher&fetcher_maxCacheTime=600&parser=HTMLParser&scraper=FacebookScraper&scraper_feedTitle=UBMannheim+Facebook+Timeline')
 								| Facebook
 							#input-group-url.input-group
 								input#inputUrl.form-control(type='text', placeholder='Hier die URL')

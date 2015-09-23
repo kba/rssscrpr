@@ -4,6 +4,11 @@ require_once 'src/Utils.php'; require_once 'src/Session.php';
 
 abstract class Scraper 
 {
+
+    var $feedTitle = '[Untitled feed]';
+    var $feedDescription = '[No description]';
+    var $feedLink;
+
     abstract function scrapeItems($session);
     abstract function scrapeTitle($session, $itemEl);
     abstract function scrapeAuthor($session, $itemEl);
@@ -11,8 +16,28 @@ abstract class Scraper
     abstract function scrapeDate($session, $itemEl);
     abstract function scrapeDescription($session, $itemEl);
 
+    public function scrapeFeedTitle($session)
+    {
+        return $this->feedTitle;
+    }
+
+    public function scrapeFeedDescription($session)
+    {
+        return $this->feedDescription;
+    }
+
+    public function scrapeFeedLink($session)
+    {
+        return $session->url;
+    }
+
     public function scrape(Session $session)
     {
+
+        $session->feed->title = $this->scrapeFeedTitle($session);
+        $session->feed->link = $this->scrapeFeedLink($session);
+        $session->feed->description = $this->scrapeFeedDescription($session);
+
         // error_log($session->dom->save('/tmp/fb.html'));
         $items = $this->scrapeItems($session);
         // error_log("Scraped " . count($items) . " items");

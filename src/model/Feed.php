@@ -5,7 +5,7 @@ require_once "src/model/Item.php";
 class Feed {
 
     var $title;
-    var $url;
+    var $link;
     var $description;
 
     private $items;
@@ -55,7 +55,7 @@ class Feed {
         $elem_channel = $xml->createElement("channel");
         $elem_channel->appendChild($xml->createElement("title", htmlspecialchars($this->title)));
         $elem_channel->appendChild($xml->createElement("description", htmlspecialchars($this->description)));
-        $elem_channel->appendChild($xml->createElement("link", $this->url)); 
+        $elem_channel->appendChild($xml->createElement("link", $this->link)); 
 
         foreach ($this->items as $item)
         {
