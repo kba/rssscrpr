@@ -66,25 +66,26 @@ function onClickRun(e) {
   $("a#api-uri").attr('href', apiUri);
 
   $.get(apiUri, function(data) {
-    toggleProcessing('success');
-    console.log(data);
+    // console.log(data);
     resultCounter.html($('item', data).size());
-    var i = 1;
-    $('item', data).each(function() {
+    var itemList = $('item', data);
+    for (var i = 0; i < itemList.length; i++) {
+      var item = itemList.get(i);
       var itemDiv = $('<div class="panel panel-default"/>');
       var itemLink = $("link", this).text();
       itemDiv.append($("<div class='panel-heading'>")
-        .append(i++ + ". ").append($('title', this).html()));
+        .append(i++ + ". ").append($('title', item).html()));
       itemDiv.append($("<div class='panel-body'>")
         .append("<b>Link: </b>").append($("<a>").append(itemLink).attr('href', itemLink))
         .append($("<br>"))
-        .append("<b>Date: </b>").append($('pubDate', this).html())
+        .append("<b>Date: </b>").append($('pubDate', item).html())
         .append($("<br>"))
-        .append("<b>Author: </b>").append($("<span>").append($('author', this).html()))
+        .append("<b>Author: </b>").append($("<span>").append($('author', item).html()))
         .append($("<br>"))
-        .append("<b>Description: </b>").append($("<p>").append($('description', this).html())));
+        .append("<b>Description: </b>").append($("<p>").append($('description', item).text())));
       resultList.append(itemDiv);
-    });
+    };
+    toggleProcessing('success');
   }).error(function(x) {
     toggleProcessing('error');
     alert(x.responseText);
