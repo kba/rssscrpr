@@ -1,0 +1,3 @@
+[submodule "data/atom2rss"]
+	path = data/atom2rss
+	url = git@github.com:pornel/atom2rss

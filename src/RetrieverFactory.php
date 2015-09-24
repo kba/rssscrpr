@@ -7,6 +7,7 @@ require_once 'src/fetcher/CachingHttpFetcher.php';
 require_once 'src/fetcher/FacebookFetcher.php';
 require_once 'src/parser/HTMLParser.php';
 require_once 'src/parser/XMLParser.php';
+require_once 'src/parser/AtomParser.php';
 require_once 'src/parser/CrawlOutgoingHTMLParser.php';
 require_once 'src/scraper/MHonArcScraper.php';
 require_once 'src/scraper/XpathScraper.php';
