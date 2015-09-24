@@ -31,7 +31,7 @@ class Item {
 
     private final function getAuthorWithEmail()
     {
-        return sprintf("%s (%s)", $this->author, $this->email);
+        return sprintf("%s (%s)", $this->email, $this->author);
     }
 
     // private final function createCDATA($xml, $elName, $data)

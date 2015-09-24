@@ -23,12 +23,12 @@ class CachingHttpFetcher extends HttpFetcher
         $cachedFile = $session->config->cacheDir . '/' . $urlMd5;
         if (file_exists($cachedFile) && (time() - filemtime($cachedFile)) < $this->maxCacheTime)
         {
-            // error_log("FROM_CACHE");
+            // error_log("FROM_CACHE: $cachedFile");
             $session->bytes = file_get_contents($cachedFile);
         }
         else
         {
-            // error_log("RELOAD");
+            // error_log("RELOAD: $cachedFile");
             $bytes = parent::doFetch($session->url);
             $session->bytes = $bytes;
             file_put_contents($cachedFile, $bytes);
