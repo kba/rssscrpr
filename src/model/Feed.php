@@ -55,7 +55,7 @@ class Feed {
         $elem_channel = $xml->createElement("channel");
         $elem_channel->appendChild($xml->createElement("title", htmlspecialchars($this->title)));
         $elem_channel->appendChild($xml->createElement("description", htmlspecialchars($this->description)));
-        $elem_channel->appendChild($xml->createElement("link", $this->link)); 
+        $elem_channel->appendChild($xml->createElement("link", htmlspecialchars($this->link)));
 
         foreach ($this->items as $item)
         {
