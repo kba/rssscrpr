@@ -64,6 +64,7 @@ html
 											select.form-control(name='parser')
 												option(selected=true) HTMLParser
 												option XMLParser
+												option AtomParser
 												option CrawlOutgoingHTMLParser
 											input(type='checkbox', data-enable='parser-customize')
 											| Customize
@@ -94,13 +95,13 @@ html
 												.panel.panel-default
 													.panel-body
 														.form-group
-															label(for='scraper_feedTitle') Feed title
+															label(for='scraper_feedTitle') Feed Title
 															input.form-control(type="text", name='scraper_feedTitle', placeholder="Feed title")
 														.form-group
 															label(for='scraper_feedDescription') Feed Description
 															input.form-control(type="text", name='scraper_feedDescription', placeholder="Feed Description")
 														.form-group
-															label(for='scraper_feedLink') Feed title
+															label(for='scraper_feedLink') Feed Link
 															input.form-control(type="text", name='scraper_feedLink', placeholder="xpath for the title")
 														.form-group
 															label(for='scraper_xpathItem') Item xpath
