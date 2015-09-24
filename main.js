@@ -74,7 +74,7 @@ function onClickRun(e) {
       var itemDiv = $('<div class="panel panel-default"/>');
       var itemLink = $("link", item).text();
       itemDiv.append($("<div class='panel-heading'>")
-        .append(i++ + ". ").append($('title', item).html()));
+        .append(i + ". ").append($('title', item).html()));
       itemDiv.append($("<div class='panel-body'>")
         .append("<b>Link: </b>").append($("<a>").append(itemLink).attr('href', itemLink))
         .append($("<br>"))
