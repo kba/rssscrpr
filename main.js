@@ -7,7 +7,7 @@ function syncFormEnable() {
   $('input[type=checkbox][data-enable]').each(function() {
     var checked = $(this).prop('checked');
     var toggleName = $(this).attr('data-enable');
-    $('*[name=' + toggleName + ']').prop('disabled', !checked);
+    $('*[name=' + toggleName + '] input').prop('disabled', !checked);
     if (checked)
       $('*[name=' + toggleName + ']').addClass('in');
     else
