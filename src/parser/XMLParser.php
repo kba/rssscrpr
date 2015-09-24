@@ -9,7 +9,7 @@ class XMLParser extends Parser
 
     public function parseDOM(Session $session)
     {
-        $session->dom->loadXML($session->bytes);
+        $session->dom->loadXML(mb_convert_encoding($session->bytes, 'HTML-ENTITIES', 'UTF-8'));
     }
 
     public function parse(Session $session)
