@@ -72,7 +72,7 @@ function onClickRun(e) {
     for (var i = 0; i < itemList.length; i++) {
       var item = itemList.get(i);
       var itemDiv = $('<div class="panel panel-default"/>');
-      var itemLink = $("link", this).text();
+      var itemLink = $("link", item).text();
       itemDiv.append($("<div class='panel-heading'>")
         .append(i++ + ". ").append($('title', item).html()));
       itemDiv.append($("<div class='panel-body'>")
