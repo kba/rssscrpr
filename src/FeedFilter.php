@@ -39,22 +39,16 @@ class FeedFilter
                 // Utils::var_error_log($list);
                 foreach ($list as $f)
                 {
+                    if (! $f)
+                        continue;
                     $matchPos = strpos($item->$cat, $f);
-                    if ($includeOrExclude === 'exclude')
+                    if (
+                        ($includeOrExclude === 'exclude'  && $matchPos !== false)
+                        ||
+                        ($includeOrExclude === 'include'  && $matchPos === false)
+                    )
                     {
-                        // If the filter matched, do not add the item
-                        if ($matchPos !== false)
-                        {
-                            continue 3;
-                        }
-                    }
-                    else
-                    {
-                        // if the filter did not match, do not add the item
-                        if ($matchPos === false)
-                        {
-                            continue 3;
-                        }
+                        continue 3;
                     }
                 }
             }
