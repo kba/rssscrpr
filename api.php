@@ -44,11 +44,11 @@ function warning_handler($errno, $errstr)
 {
 
     // WARNING:2: DOMDocument::loadHTML(): Attribute data-referrer redefined in Entity, line: 17
+    error_log("WARNING: " . $errstr);
     if (Utils::contains($errstr, 'redefined')) return;
     if (Utils::contains($errstr, 'already defined')) return;
     if (Utils::contains($errstr, 'Unexpected end tag')) return;
     if (Utils::contains($errstr, "htmlParseEntityRef: expecting ';'")) return;
-    // error_log("WARNING: " . $errstr);
     Utils::throw400("WARNING:$errno: $errstr");
 }
 

@@ -41,7 +41,7 @@ class XpathScraper extends Scraper
     function scrapeDate($session, $e)
     {
         $s = $this->getByXpath($session, $e, 'xpathDate');
-        error_log("Scraped date: '$s'");
+        // error_log("Scraped date: '$s'");
         if (! is_numeric($s))
         {
             $s = strtotime($s);
