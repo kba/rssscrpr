@@ -78,7 +78,7 @@ function onClickRun(e) {
       itemDiv.append($("<div class='panel-body'>")
         .append("<b>Link: </b>").append($("<a>").append(itemLink).attr('href', itemLink))
         .append($("<br>"))
-        .append("<b>Date: </b>").append($('date', this).html())
+        .append("<b>Date: </b>").append($('pubDate', this).html())
         .append($("<br>"))
         .append("<b>Author: </b>").append($("<span>").append($('author', this).html()))
         .append($("<br>"))
