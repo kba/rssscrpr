@@ -3,10 +3,24 @@ var resultCounter = $("#results-found")
 var inputUrl = $("#input-group-url input");
 var runButton = $("#input-group-url button");
 
-function syncFormEnable() {
-  $('input[type=checkbox][data-enable]').each(function() {
-    var checked = $(this).prop('checked');
-    var toggleName = $(this).attr('data-enable');
+function syncFormEnable(forceEnable) {
+  $('span[data-on-select]').each(function() {
+    var checkbox = $("input[type='checkbox']", this);
+    var toggleName = checkbox.attr('data-enable');
+    var checkBoxFor = $(this).attr('data-on-select');
+    var selectedOption = $("select", $(this).parent()).find(':selected').text();
+
+    if (checkBoxFor !== selectedOption) {
+      $('*[name=' + toggleName + ']').removeClass('in');
+      $('*[name=' + toggleName + '] input').prop('disabled', true);
+      $(this).hide();
+      return;
+    }
+
+    $(this).show();
+    if (forceEnable)
+      checkbox.attr('checked', true);
+    var checked = checkbox.prop('checked');
     $('*[name=' + toggleName + '] input').prop('disabled', !checked);
     if (checked)
       $('*[name=' + toggleName + ']').addClass('in');
@@ -43,15 +57,18 @@ function toggleProcessing(suc) {
 }
 
 function onClickImport(e) {
+  console.log("enter#onClickImport");
   var qs = deserializeQueryString($("#import-feed input").val());
   for (k in qs) {
     var v = qs[k];
     $("*[name='" + k + "']").val(v);
+    // $("*[name='" + k + "']").attr('disabled', false);
     inputUrl.val(qs.url);
   }
 }
 
 function onClickRun(e) {
+  console.log("enter#onClickRun");
   var serializedForm = $("form :input").filter(function(index, element) {
     return $(element).val() != "";
   }).serialize();
@@ -73,6 +90,10 @@ function onClickRun(e) {
       var item = itemList.get(i);
       var itemDiv = $('<div class="panel panel-default"/>');
       var itemLink = $("link", item).text();
+      var itemDesc = $("<p>").append(
+          $('description', item).text().indexOf('CDATA') > -1
+          ? $('description', item).text()
+          : $('description', item).html());
       itemDiv.append($("<div class='panel-heading'>")
         .append(i + ". ").append($('title', item).html()));
       itemDiv.append($("<div class='panel-body'>")
@@ -82,7 +103,7 @@ function onClickRun(e) {
         .append($("<br>"))
         .append("<b>Author: </b>").append($("<span>").append($('author', item).html()))
         .append($("<br>"))
-        .append("<b>Description: </b>").append($("<p>").append($('description', item).text())));
+        .append("<b>Description: </b>").append(itemDesc));
       resultList.append(itemDiv);
     };
     toggleProcessing('success');
@@ -93,8 +114,10 @@ function onClickRun(e) {
 }
 
 function loadExample() {
+  console.log("enter#loadExample");
   $("#import-feed input").val($(this).attr('data-example-url'))
   onClickImport();
+  syncFormEnable(true);
 }
 
 
@@ -102,11 +125,9 @@ function loadExample() {
  * Click handlers
  */
 $("input").on('click', syncFormEnable);
-
+$("select").on('change', syncFormEnable);
 runButton.on('click', onClickRun);
-
 $("a[data-example-url]").on('click', loadExample);
-
 $("#import-feed button").on('click', onClickImport);
 
 /*
