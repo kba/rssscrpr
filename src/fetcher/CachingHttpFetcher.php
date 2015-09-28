@@ -6,7 +6,7 @@ class CachingHttpFetcher extends HttpFetcher
 {
 
     // Maximum time to cache
-    var $maxCacheTime = 10 * 60;
+    var $maxCacheTime = 2 * 60 * 60;
 
     private function ensureCacheDir($session)
     {

@@ -41,10 +41,16 @@ class XpathScraper extends Scraper
     function scrapeDate($session, $e)
     {
         $s = $this->getByXpath($session, $e, 'xpathDate');
-        // error_log("Scraped date: '$s'");
+        // error_log("Scraped date: '$s' from " . $session->dom->saveXML($e));
         if (! is_numeric($s))
         {
-            $s = strtotime($s);
+            $parsed = date_parse(Utils::translateMonth($s));
+            $yyyy = $parsed['year'] ?: '1900';
+            $mm = $parsed['month'] ?: '01';
+            $dd = $parsed['day'] ?: '01';
+            $newS = sprintf('%04d-%02d-%02d', $yyyy, $mm, $dd);
+            // error_log("Scraped date: '$s' -> '$newS'");
+            $s = strtotime($newS);
         }
         return $s;
     }
@@ -78,7 +84,8 @@ class XpathScraper extends Scraper
             {
                 foreach ($node->childNodes as $childNode)
                 {
-                    $ret .= $node->ownerDocument->saveXML($childNode);
+                    $asXml = $node->ownerDocument->saveXML($childNode);
+                    $ret .= $asXml;
                 }
             }
             return $ret;
