@@ -7,7 +7,6 @@ class CrawlOutgoingHTMLParser extends HTMLParser
 {
 
     var $xpathOutgoing;
-    var $maxRecursion = 3;
 
     public function parse(Session $session)
     {
@@ -15,40 +14,62 @@ class CrawlOutgoingHTMLParser extends HTMLParser
         {
             Utils::throw400("Must set 'xpathOutgoing'");
         }
-        error_log($this->xpathOutgoing);
+        // the list of xpaths to find outgoing links, ordered by level of hierarchy
+        $xpathOutgoingList = preg_split("/\s*,\s*/", $this->xpathOutgoing);
 
+        // Let the HTMLParser parse, so we have a DOM
         parent::parse($session);
 
-
-        $outgoingNodes = $session->xpath->query($this->xpathOutgoing);
-        if ($outgoingNodes === false)
+        // The urls to iterate through in this level of hierarchy
+        $crawlUrls = array($session->url);
+        // Step through the outgoing link xpaths
+        for ($i =0; $i < count($xpathOutgoingList); $i++)
         {
-            throw Utils::throw400("Could not determine outgoing links");
-        }
-        else if ($outgoingNodes->length === 0)
-        {
-            throw Utils::throw400("No outgoing links");
-        }
-
-        $i = 0;
-        foreach ($outgoingNodes as $outgoingNode)
-        {
-            if ($i++ > $this->maxRecursion)
+            $nextLevelUrls = array();
+            $thisLevelXpath = $xpathOutgoingList[$i];
+            foreach ($crawlUrls as $url)
             {
-                break;
+                // create a session
+                $subsession = new Session($url);
+                // create a fetcher and fetch
+                $fetcher = new CachingHttpFetcher();
+                $fetcher->fetch($subsession);
+                // create a non-crawling HTMLParser and parse
+                $parser = new HTMLParser();
+                $parser->parse($subsession);
+                // Query for URLs of pages to further recurse
+                $outLinkNodes = $subsession->xpath->query($thisLevelXpath);
+                if ($outLinkNodes === false)
+                {
+                    throw Utils::throw400("Xpath query '{$thisLevelXpath}' failed for '{$url}' [Level: {$i}]");
+                }
+                else if ($outLinkNodes->length === 0)
+                {
+                    throw Utils::throw400("No results for query '{$thisLevelXpath}' failed for '{$url}' [Level: {$i}]");
+                }
+                foreach ($outLinkNodes as $outLinkNode)
+                {
+                    $nextLevelUrls[] = $subsession->ensureAbsoluteUrl($outLinkNode->textContent);
+                }
             }
-            $outgoingLink = $session->ensureAbsoluteUrl($outgoingNode->textContent);
+            $crawlUrls = $nextLevelUrls;
+        }
 
-            $subsession = new Session($outgoingLink);
-            $subfetcher = new CachingHttpFetcher();
-            $subparser = new HTMLParser();
-            $subfetcher->fetch($subsession);
-            $subparser->parse($subsession);
+        // Concatenate all the <body> elements into the original document
+        foreach ($crawlUrls as $url)
+        {
+            // create a session
+            $subsession = new Session($url);
+            // create a fetcher and fetch
+            $fetcher = new CachingHttpFetcher();
+            $fetcher->fetch($subsession);
+            // create a non-crawling HTMLParser and parse
+            $parser = new HTMLParser();
+            $parser->parse($subsession);
             $newBody = $session->dom->importNode($subsession->dom->getElementsByTagName('body')->item(0), true);
             $session->dom->documentElement->appendChild($newBody);
         }
-        $session->xpath = new DOMXPath($session->dom);
-        // error_log($session->dom->save('/tmp/intra.html'));
+        $session->dom->save('/tmp/test3.html');
     }
 }
 
