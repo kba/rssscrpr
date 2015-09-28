@@ -49,7 +49,7 @@ html
 											.form-group
 												.form-group
 													label(for='#{componentType}') #{componentType}
-													select.form-control(name="#{componentType}", id="#{componentType}")
+													select.form-control(name="#{componentType.toLowerCase()}", id="#{componentType}")
 														each comp in componentList
 															option #{comp.name}
 												each comp in componentList
@@ -61,8 +61,8 @@ html
 															.panel-body
 																each attr in comp.attr
 																	.form-group
-																		label(for='#{componentType}_#{attr.name}' data-on-select="#{comp.name}") #{attr.name}
-																		input.form-control(type="text", name='#{componentType}_#{attr.name}', placeholder="#{attr.name}")
+																		label(for='#{componentType.toLowerCase()}_#{attr.name}' data-on-select="#{comp.name}") #{attr.name}
+																		input.form-control(type="text", name='#{componentType.toLowerCase()}_#{attr.name}', placeholder="#{attr.name}")
 
 							.panel.panel-default
 								.panel-heading
@@ -138,19 +138,19 @@ html
 						.panel-heading Results
 						.panel-body
 							| Beispiele: 
-							a(data-example-url='http://localhost/rss-Scraper/api.php?url=http%3A%2F%2Fwww.ub.uni-dortmund.de%2Flisten%2Finetbib%2Fdate1.html%2356142&action=scrape-html&Fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&Parser=HTMLParser&scraper=MHonArcScraper&scraper_feedTitle=Inetbib+Neueste+Beitraege&filter_maxResult=30')
+							a(data-example-url='http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fwww.ub.uni-dortmund.de%2Flisten%2Finetbib%2Fdate1.html%2356142&action=scrape-html&scraper=MHonArcScraper&scraper_feedTitle=Inetbib+Neueste+Beitraege&fetcher=CachingHttpFetcher&parser=HTMLParser&filter_maxResult=30')
 								| Inetbib
 							|&nbsp;|&nbsp;
-							a(data-example-url='http://example.org/?url=https%3A%2F%2Ftwitter.com%2FUBMannheim&action=scrape-html&Fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&Parser=HTMLParser&parser_xpathOutgoing=%2F%2Fli%2Fa%2F%40href&scraper=TwitterScraper&nofb=on&scraper_feedTitle=Tweets+der+UBMannheim')
+							a(data-example-url='http://localhost/rss-scraper/api.php?url=https%3A%2F%2Ftwitter.com%2FUBMannheim&action=scrape-html&scraper=TwitterScraper&scraper_feedTitle=Tweets+der+UBMannheim&fetcher=CachingHttpFetcher&parser=HTMLParser&nofb=on&filter_exclude_title=blog.bib')
 								| Twitter
 							|&nbsp;|&nbsp;
-							a(data-example-url='http://example.org/?url=http%3A%2F%2Fintranet.verwaltung.uni-mannheim.de%2Fintranet%2Fdez_vi%2Forganisation%2Frektoratsnachrichten%2Findex.html&action=scrape-html&Fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&Parser=CrawlOutgoingHTMLParser&parser_xpathOutgoing=%2F%2Fli%2Fa%2F%40href&scraper=RektoratScraper&scraper_feedTitle=Rektoratsnachrichten')
+							a(data-example-url='http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fintranet.verwaltung.uni-mannheim.de%2Fintranet%2Fdez_vi%2Forganisation%2Frektoratsnachrichten%2Findex.html&action=scrape-html&scraper=RektoratScraper&fetcher=CachingHttpFetcher&parser=CrawlOutgoingHTMLParser&parser_xpathOutgoing=%2F%2Ful%5B1%5D%2Fli%2Fa%2F%40href')
 								| Rektoratsnachrichten
 							|&nbsp;|&nbsp;
-							a(data-example-url='http://localhost/rss-Scraper/api.php?url=http%3A%2F%2Fwww.belwue.de%2Findex.php%3Ftype%3D100%26tx_ttnews%5Bcat%5D%3D5&action=scrape-html&Fetcher=CachingHttpFetcher&fetcher_maxCacheTime=600&Parser=XMLParser&scraper=RSSScraper&filter_include_title=Strom&scraper_feedTitle=Stoerungen+in+BaWue')
+							a(data-example-url='http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fwww.belwue.de%2Findex.php%3Ftype%3D100%26tx_ttnews%5Bcat%5D%3D5&action=scrape-html&scraper=RSSScraper&scraper_feedTitle=Stoerungen+in+BaWue&fetcher=CachingHttpFetcher&parser=XMLParser&filter_include_title=Strom')
 								| RSS-Feed
 							|&nbsp;|&nbsp;
-							a(data-example-url='http://example.org/api.php?url=https%3A%2F%2Fwww.facebook.com%2FUBMannheim&action=scrape-html&Fetcher=FacebookFetcher&fetcher_maxCacheTime=600&Parser=HTMLParser&scraper=FacebookScraper&scraper_feedTitle=UBMannheim+Facebook+Timeline')
+							a(data-example-url='http://localhost/rss-scraper/api.php?url=https%3A%2F%2Fwww.facebook.com%2FUBMannheim&action=scrape-html&scraper=FacebookScraper&fetcher=FacebookFetcher&fetcher_maxCacheTime=600&parser=HTMLParser')
 								| Facebook
 							|&nbsp;|&nbsp;
 							a(data-example-url='http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fzs.thulb.uni-jena.de%2Freceive%2Fjportal_jpjournal_00000014&action=scrape-html&scraper=XpathScraper&scraper_xpathItem=%2F%2Fdiv%5Bcontains(%40class%2C+%22jp-objectlist-metadata%22)%5D&scraper_xpathTitle=.%2Fh3&scraper_xpathLink=.%2Fh3%2Fa%2F%40href&scraper_xpathAuthor=.%2F%2Fli%5B1%5D%2Fspan%5Bcontains(%40class%2C+%22jp-layout-inList%22)%5D&scraper_xpathDescription=..&scraper_xpathDate=.%2F%2Fancestor%3A%3Abody%2F%2Fdd%5B1%5D%2Ftext()&fetcher=CachingHttpFetcher&parser=CrawlOutgoingHTMLParser&parser_xpathOutgoing=%2F%2Fdiv%5B%40id%3D%22jp-tableOfContent%22%5D%2F%2Ful%2Fli%2Fa%2F%40href%2C%2F%2Fdiv%5B%40id%3D%22jp-tableOfContent%22%5D%2F%2Ful%2Fli%2Fa%2F%40href&filter_maxResult=100')

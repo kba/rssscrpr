@@ -74,7 +74,7 @@ class RetrieverFactory
         $retriever = new Retriever($session);
         foreach (array('scraper', 'fetcher', 'parser') as $component)
         {
-            if (! $queryParams[$component])
+            if (!array_key_exists('scraper', $queryParams) || ! $queryParams[$component])
             {
                 throw Utils::throw400("Must set '$component'.");
             }
@@ -107,6 +107,7 @@ class RetrieverFactory
 
         foreach ($queryParams as $k => $v)
         {
+            error_log("$k => $v");
             if (! $v)
             {
                 continue;

@@ -50,7 +50,7 @@ function warning_handler($errno, $errstr)
     if (Utils::contains($errstr, "invalid in Entity")) return;
     error_log("WARNING: " . $errstr);
     if (Utils::contains($errstr, 'Unexpected end tag')) return;
-    Utils::throw400("WARNING:$errno: $errstr");
+    // Utils::throw400("WARNING:$errno: $errstr");
 }
 
 if (!isset($_GET['action']))
