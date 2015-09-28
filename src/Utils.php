@@ -41,7 +41,7 @@ class Utils
     static function monthNameToNumber($str)
     {
         $str = self::translateMonth($str);
-        $replacements = array(
+        $replacements1 = array(
             "January" => '01',
             "February" => '02',
             "March" => '03',
@@ -55,7 +55,29 @@ class Utils
             "November" => '11',
             "December" => '12',
         );
-        foreach ($replacements as $de => $en)
+        foreach ($replacements1 as $de => $en)
+        {
+            $str = str_replace($de, $en, $str);
+        }
+        $replacements2 = array(
+            "Jan" => '01',
+            "Feb" => '02',
+            "Mar" => '03',
+            "Mär" => '03',
+            "Apr" => '04',
+            "May" => '05',
+            "Mai" => '05',
+            "Jun" => '06',
+            "Jul" => '07',
+            "Aug" => '08',
+            "Sep" => '09',
+            "Oct" => '10',
+            "Okt" => '10',
+            "Nov" => '11',
+            "Dec" => '12',
+            "Dez" => '12',
+        );
+        foreach ($replacements2 as $de => $en)
         {
             $str = str_replace($de, $en, $str);
         }
@@ -64,7 +86,7 @@ class Utils
 
     static function translateMonth($str)
     {
-        $replacements = array(
+        foreach(array(
             "Januar" => "January",
             "Jänner" => "January",
             "Februar" => "February",
@@ -74,14 +96,21 @@ class Utils
             "Juli" => "July",
             "Oktober" => "October",
             "Dezember" => "December"
-        );
-        foreach ($replacements as $de => $en)
-        {
-            $str = str_replace($de, $en, $str);
-        }
+        ) as $de => $en) { $str = preg_replace('/' . $de . '\b/', $en, $str); }
+        foreach(array(
+            "Jän" => "Jan",
+            "Mär" => "Mar",
+            "Mai" => "May",
+            "Okt" => "Oct",
+            "Dez" => "Dec"
+        ) as $de => $en) { $str = preg_replace('/' . $de . '\b/', $en, $str); }
         return $str;
     }
 
+    static function parseDateStr($str)
+    {
+        return strtotime(Utils::monthNameToNumber($str));
+    }
 
 }
 
