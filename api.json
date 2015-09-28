@@ -1,0 +1,305 @@
+{
+    "api": {
+        "Scraper": {
+            "XpathScraper": {
+                "name": "XpathScraper",
+                "attr": {
+                    "xpathItem": {
+                        "name": "xpathItem",
+                        "default": null
+                    },
+                    "xpathTitle": {
+                        "name": "xpathTitle",
+                        "default": null
+                    },
+                    "xpathLink": {
+                        "name": "xpathLink",
+                        "default": null
+                    },
+                    "xpathAuthor": {
+                        "name": "xpathAuthor",
+                        "default": null
+                    },
+                    "xpathDescription": {
+                        "name": "xpathDescription",
+                        "default": null
+                    },
+                    "xpathDate": {
+                        "name": "xpathDate",
+                        "default": null
+                    },
+                    "feedTitle": {
+                        "name": "feedTitle",
+                        "default": "[Untitled feed]"
+                    },
+                    "feedDescription": {
+                        "name": "feedDescription",
+                        "default": "[No description]"
+                    },
+                    "feedLink": {
+                        "name": "feedLink",
+                        "default": null
+                    }
+                }
+            },
+            "MHonArcScraper": {
+                "name": "MHonArcScraper",
+                "attr": {
+                    "xpathItem": {
+                        "name": "xpathItem",
+                        "default": null
+                    },
+                    "xpathTitle": {
+                        "name": "xpathTitle",
+                        "default": null
+                    },
+                    "xpathLink": {
+                        "name": "xpathLink",
+                        "default": null
+                    },
+                    "xpathAuthor": {
+                        "name": "xpathAuthor",
+                        "default": null
+                    },
+                    "xpathDescription": {
+                        "name": "xpathDescription",
+                        "default": null
+                    },
+                    "xpathDate": {
+                        "name": "xpathDate",
+                        "default": null
+                    },
+                    "feedTitle": {
+                        "name": "feedTitle",
+                        "default": "[Untitled feed]"
+                    },
+                    "feedDescription": {
+                        "name": "feedDescription",
+                        "default": "[No description]"
+                    },
+                    "feedLink": {
+                        "name": "feedLink",
+                        "default": null
+                    }
+                }
+            },
+            "TwitterScraper": {
+                "name": "TwitterScraper",
+                "attr": {
+                    "xpathItem": {
+                        "name": "xpathItem",
+                        "default": null
+                    },
+                    "xpathTitle": {
+                        "name": "xpathTitle",
+                        "default": null
+                    },
+                    "xpathLink": {
+                        "name": "xpathLink",
+                        "default": null
+                    },
+                    "xpathAuthor": {
+                        "name": "xpathAuthor",
+                        "default": null
+                    },
+                    "xpathDescription": {
+                        "name": "xpathDescription",
+                        "default": null
+                    },
+                    "xpathDate": {
+                        "name": "xpathDate",
+                        "default": null
+                    },
+                    "feedTitle": {
+                        "name": "feedTitle",
+                        "default": "[Untitled feed]"
+                    },
+                    "feedDescription": {
+                        "name": "feedDescription",
+                        "default": "[No description]"
+                    },
+                    "feedLink": {
+                        "name": "feedLink",
+                        "default": null
+                    }
+                }
+            },
+            "RektoratScraper": {
+                "name": "RektoratScraper",
+                "attr": {
+                    "xpathItem": {
+                        "name": "xpathItem",
+                        "default": null
+                    },
+                    "xpathTitle": {
+                        "name": "xpathTitle",
+                        "default": null
+                    },
+                    "xpathLink": {
+                        "name": "xpathLink",
+                        "default": null
+                    },
+                    "xpathAuthor": {
+                        "name": "xpathAuthor",
+                        "default": null
+                    },
+                    "xpathDescription": {
+                        "name": "xpathDescription",
+                        "default": null
+                    },
+                    "xpathDate": {
+                        "name": "xpathDate",
+                        "default": null
+                    },
+                    "feedTitle": {
+                        "name": "feedTitle",
+                        "default": "[Untitled feed]"
+                    },
+                    "feedDescription": {
+                        "name": "feedDescription",
+                        "default": "[No description]"
+                    },
+                    "feedLink": {
+                        "name": "feedLink",
+                        "default": null
+                    }
+                }
+            },
+            "RSSScraper": {
+                "name": "RSSScraper",
+                "attr": {
+                    "xpathItem": {
+                        "name": "xpathItem",
+                        "default": null
+                    },
+                    "xpathTitle": {
+                        "name": "xpathTitle",
+                        "default": null
+                    },
+                    "xpathLink": {
+                        "name": "xpathLink",
+                        "default": null
+                    },
+                    "xpathAuthor": {
+                        "name": "xpathAuthor",
+                        "default": null
+                    },
+                    "xpathDescription": {
+                        "name": "xpathDescription",
+                        "default": null
+                    },
+                    "xpathDate": {
+                        "name": "xpathDate",
+                        "default": null
+                    },
+                    "feedTitle": {
+                        "name": "feedTitle",
+                        "default": "[Untitled feed]"
+                    },
+                    "feedDescription": {
+                        "name": "feedDescription",
+                        "default": "[No description]"
+                    },
+                    "feedLink": {
+                        "name": "feedLink",
+                        "default": null
+                    }
+                }
+            },
+            "FacebookScraper": {
+                "name": "FacebookScraper",
+                "attr": {
+                    "xpathItem": {
+                        "name": "xpathItem",
+                        "default": null
+                    },
+                    "xpathTitle": {
+                        "name": "xpathTitle",
+                        "default": null
+                    },
+                    "xpathLink": {
+                        "name": "xpathLink",
+                        "default": null
+                    },
+                    "xpathAuthor": {
+                        "name": "xpathAuthor",
+                        "default": null
+                    },
+                    "xpathDescription": {
+                        "name": "xpathDescription",
+                        "default": null
+                    },
+                    "xpathDate": {
+                        "name": "xpathDate",
+                        "default": null
+                    },
+                    "feedTitle": {
+                        "name": "feedTitle",
+                        "default": "[Untitled feed]"
+                    },
+                    "feedDescription": {
+                        "name": "feedDescription",
+                        "default": "[No description]"
+                    },
+                    "feedLink": {
+                        "name": "feedLink",
+                        "default": null
+                    }
+                }
+            }
+        },
+        "Fetcher": {
+            "HttpFetcher": {
+                "name": "HttpFetcher",
+                "attr": []
+            },
+            "CachingHttpFetcher": {
+                "name": "CachingHttpFetcher",
+                "attr": {
+                    "maxCacheTime": {
+                        "name": "maxCacheTime",
+                        "default": 7200
+                    }
+                }
+            },
+            "FacebookFetcher": {
+                "name": "FacebookFetcher",
+                "attr": {
+                    "maxCacheTime": {
+                        "name": "maxCacheTime",
+                        "default": 7200
+                    }
+                }
+            }
+        },
+        "Parser": {
+            "XMLParser": {
+                "name": "XMLParser",
+                "attr": {
+                    "xpathOutgoing": {
+                        "name": "xpathOutgoing",
+                        "default": null
+                    }
+                }
+            },
+            "HTMLParser": {
+                "name": "HTMLParser",
+                "attr": {
+                    "xpathOutgoing": {
+                        "name": "xpathOutgoing",
+                        "default": null
+                    }
+                }
+            },
+            "CrawlOutgoingHTMLParser": {
+                "name": "CrawlOutgoingHTMLParser",
+                "attr": {
+                    "xpathOutgoing": {
+                        "name": "xpathOutgoing",
+                        "default": null
+                    }
+                }
+            }
+        }
+    }
+}
