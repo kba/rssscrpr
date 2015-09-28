@@ -14,3 +14,16 @@ Drop below Apache DocumentRoot.
 
 git initialize submodules
 
+## Building
+
+Rebuild API JSON:
+
+```
+php rebuild-api-json.php > api.json
+```
+
+Rebuild HTML
+
+```
+jade -O api.json index.jade
+```

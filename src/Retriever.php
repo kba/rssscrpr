@@ -1,6 +1,6 @@
 <?php
 
-require_once 'src/fetcher/HttpFetcher.php';
+require_once 'src/fetcher/CachingHttpFetcher.php';
 require_once 'src/parser/HTMLParser.php';
 require_once 'src/FeedFilter.php';
 
@@ -24,7 +24,7 @@ class Retriever {
     // Inject the session + the tools
     public function __construct(Session $session) {
         $this->session = $session;
-        $this->fetcher = new HttpFetcher();
+        $this->fetcher = new CachingHttpFetcher();
         $this->parser =  new HTMLParser();
         $this->scraper = new XpathScraper();
         $this->filter = new FeedFilter();

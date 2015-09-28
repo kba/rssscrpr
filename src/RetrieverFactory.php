@@ -26,6 +26,40 @@ class RetrieverFactory
     {
     }
 
+    public function reflectComponents()
+    {
+        $comp = array();
+        $superClasses = array(
+            'Scraper',
+            'Fetcher',
+            'Parser'
+        );
+        foreach ($superClasses as $superClass)
+        {
+            $comp[$superClass] = array();
+            foreach(get_declared_classes() as $candidate)
+            {
+                $reflect = new ReflectionClass($candidate);
+                if (!$reflect->isAbstract() && 
+                    ($candidate === $superClass || $reflect->isSubclassOf($superClass)))
+                {
+                    $comp[$superClass][$candidate]['name'] = $reflect->name;
+                    $comp[$superClass][$candidate]['attr'] = array();
+                    foreach ($reflect->getProperties() as $prop)
+                    {
+                        $comp[$superClass][$candidate]['attr'][$prop->name] = array(
+                            'name' => $prop->name,
+                            'default' => $reflect->getDefaultProperties()[$prop->name]
+                        );
+                    }
+                }
+            }
+        }
+
+        return json_encode(array('api'=>$comp), JSON_PRETTY_PRINT);
+    }
+
+
     public function createHtmlScraperFromQueryParams($queryParams)
     {
         if (! $queryParams['url'])
@@ -99,5 +133,7 @@ class RetrieverFactory
     }
 
 }
+
+// error_log ( RetrieverFactory::reflectComponents());
 
 ?>

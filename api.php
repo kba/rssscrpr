@@ -44,11 +44,12 @@ function warning_handler($errno, $errstr)
 {
 
     // WARNING:2: DOMDocument::loadHTML(): Attribute data-referrer redefined in Entity, line: 17
-    error_log("WARNING: " . $errstr);
     if (Utils::contains($errstr, 'redefined')) return;
     if (Utils::contains($errstr, 'already defined')) return;
-    if (Utils::contains($errstr, 'Unexpected end tag')) return;
     if (Utils::contains($errstr, "htmlParseEntityRef: expecting ';'")) return;
+    if (Utils::contains($errstr, "invalid in Entity")) return;
+    error_log("WARNING: " . $errstr);
+    if (Utils::contains($errstr, 'Unexpected end tag')) return;
     Utils::throw400("WARNING:$errno: $errstr");
 }
 
@@ -63,7 +64,12 @@ if ($_GET['action'] === 'scrape-html')
     $feed = $retriever->go();
     echoRSS($feed);
 }
-else 
+else if ($_GET['action'] === 'reflect')
+{
+    header('Content-Type: application/json');
+    echo Utils::reflectComponents();
+}
+else
 {
     Utils::throw400("Undefine action '{$_GET['action']}'!");
 }
