@@ -1,6 +1,7 @@
 <?php
 
 require_once 'src/model/Feed.php';
+require_once 'src/phpuri.php';
 
 class Session
 {
@@ -46,20 +47,11 @@ class Session
 
     function ensureAbsoluteUrl($url)
     {
+        // error_log(json_encode($this->url_parts));
         if (substr($url, 0, 4) == 'http') {
             return $url;
         } else {
-            $result = $this->url_parts['scheme'] .  '://' . $this->url_parts['host'];
-            // TODO chomp trailing slashes and then implode for clarity
-            if ( strlen(dirname($this->url_parts['path'])) > 1 && // i.e. not just /
-                substr($url, 0, 1) !== "/" ) {// 
-                if (substr($this->url_parts['path'],-1) == "/") {
-                    $result .= $this->url_parts['path'];
-                } else {
-                    $result .= dirname($this->url_parts['path']) . '/';
-                }
-            }
-            return $result . $url;
+            return phpUri::parse($this->url)->join($url);
         }
     }
 
