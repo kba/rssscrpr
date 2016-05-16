@@ -53,6 +53,7 @@ html
 														each comp in componentList
 															option #{comp.name}
 												each comp in componentList
+													- // console.log(comp)
 													span(data-on-select="#{comp.name}")
 														input(type='checkbox', data-enable="#{componentType}-customize-#{comp.name}")
 														| Options for #{comp.name}
@@ -167,4 +168,4 @@ html
 			footer
 				p © Konstantin Baierer 2016
 			script(src='./main.js')
-// vim: set sw=4 ts=4:
+// vim: set sw=2 ts=2:
