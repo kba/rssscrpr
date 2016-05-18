@@ -21,11 +21,11 @@ git initialize submodules
 Rebuild API JSON:
 
 ```
-php rebuild-api-json.php > api.json
+make api.json
 ```
 
 Rebuild HTML
 
 ```
-jade -O api.json index.jade
+make index.html
 ```
