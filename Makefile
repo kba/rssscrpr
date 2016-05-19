@@ -1,6 +1,13 @@
 PHP_SCRIPTS = ${wildcard src/*.php src/**/*.php}
 
-.PHONY: all
+.PHONY: all\
+	dev-deps dev-server
+
+dev-deps:
+	sudo apt-get install php-curl php-xml -t testing
+
+dev-server:
+	php -S localhost:7070 2>&1| tee 'log/rssscrpr.log'
 
 all: index.html
 
