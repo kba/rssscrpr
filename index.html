@@ -21,12 +21,12 @@
         <!-- /.navbar-collapse-->
       </div>
     </nav>
-    <div style="margin-top: 80px;" class="container">
+    <div style="margin-top: 80px;" class="container-fluid">
       <!-- Example row of columns-->
       <div class="row">
         <form id="cyos-form">
           <input type="hidden" name="action" value="scrape-html">
-          <div class="col-md-4">
+          <div class="col-sm-4">
             <div class="panel panel-default">
               <div class="panel-heading">Edit Feed</div>
               <div class="panel-body">
@@ -332,6 +332,10 @@
                       <div name="Fetcher-customize-CachingHttpFetcher" class="collapse in">
                         <div class="panel panel-default">
                           <div class="panel-body">
+                            <div class="form-group">
+                              <label for="fetcher_maxCacheTime" data-on-select="CachingHttpFetcher">maxCacheTime</label>
+                              <input type="text" name="fetcher_maxCacheTime" placeholder="maxCacheTime" class="form-control">
+                            </div>
                           </div>
                         </div>
                       </div><span data-on-select="FacebookFetcher">
@@ -339,6 +343,10 @@
                       <div name="Fetcher-customize-FacebookFetcher" class="collapse in">
                         <div class="panel panel-default">
                           <div class="panel-body">
+                            <div class="form-group">
+                              <label for="fetcher_maxCacheTime" data-on-select="FacebookFetcher">maxCacheTime</label>
+                              <input type="text" name="fetcher_maxCacheTime" placeholder="maxCacheTime" class="form-control">
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -475,7 +483,7 @@
             </div>
           </div>
         </form>
-        <div class="col-md-8">
+        <div class="col-sm-8">
           <div id="results" class="panel panel-default">
             <div class="panel-heading">Results</div>
             <div class="panel-body">Beispiele: <a data-example-url="https://localhost/api.php?url=http%3A%2F%2Fwww.inetbib.de%2Flistenarchiv%2F&amp;action=scrape-html&amp;scraper=MHonArcScraper&amp;scraper_feedTitle=Inetbib+Neueste+Beitraege&amp;fetcher=CachingHttpFetcher&amp;parser=HTMLParser&amp;filter_maxResult=30">Inetbib</a>&nbsp;|&nbsp;<a data-example-url="http://localhost/rss-scraper/api.php?url=https%3A%2F%2Ftwitter.com%2FUBMannheim&amp;action=scrape-html&amp;scraper=TwitterScraper&amp;scraper_feedTitle=Tweets+der+UBMannheim&amp;fetcher=CachingHttpFetcher&amp;parser=HTMLParser&amp;nofb=on&amp;filter_exclude_title=blog.bib">Twitter</a>&nbsp;|&nbsp;<a data-example-url="http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fintranet.verwaltung.uni-mannheim.de%2Fintranet%2Fdez_vi%2Forganisation%2Frektoratsnachrichten%2Findex.html&amp;action=scrape-html&amp;scraper=RektoratScraper&amp;fetcher=CachingHttpFetcher&amp;parser=CrawlOutgoingHTMLParser&amp;parser_xpathOutgoing=%2F%2Ful%5B1%5D%2Fli%2Fa%2F%40href">Rektoratsnachrichten</a>&nbsp;|&nbsp;<a data-example-url="http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fwww.belwue.de%2Findex.php%3Ftype%3D100%26tx_ttnews%5Bcat%5D%3D5&amp;action=scrape-html&amp;scraper=RSSScraper&amp;scraper_feedTitle=Stoerungen+in+BaWue&amp;fetcher=CachingHttpFetcher&amp;parser=XMLParser&amp;filter_include_title=Strom">RSS-Feed</a>&nbsp;|&nbsp;<a data-example-url="http://localhost/rss-scraper/api.php?url=https%3A%2F%2Fwww.facebook.com%2FUBMannheim&amp;action=scrape-html&amp;scraper=FacebookScraper&amp;fetcher=FacebookFetcher&amp;fetcher_maxCacheTime=600&amp;parser=HTMLParser">Facebook</a>&nbsp;|&nbsp;<a data-example-url="http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fzs.thulb.uni-jena.de%2Freceive%2Fjportal_jpjournal_00000014&amp;action=scrape-html&amp;scraper=XpathScraper&amp;scraper_xpathItem=%2F%2Fdiv%5Bcontains(%40class%2C+%22jp-objectlist-metadata%22)%5D&amp;scraper_xpathTitle=.%2Fh3&amp;scraper_xpathLink=.%2Fh3%2Fa%2F%40href&amp;scraper_xpathAuthor=.%2F%2Fli%5B1%5D%2Fspan%5Bcontains(%40class%2C+%22jp-layout-inList%22)%5D&amp;scraper_xpathDescription=..&amp;scraper_xpathDate=.%2F%2Fancestor%3A%3Abody%2F%2Fdd%5B1%5D%2Ftext()&amp;fetcher=CachingHttpFetcher&amp;parser=CrawlOutgoingHTMLParser&amp;parser_xpathOutgoing=%2F%2Fdiv%5B%40id%3D%22jp-tableOfContent%22%5D%2F%2Ful%2Fli%2Fa%2F%40href%2C%2F%2Fdiv%5B%40id%3D%22jp-tableOfContent%22%5D%2F%2Ful%2Fli%2Fa%2F%40href&amp;filter_maxResult=100">(Zeitschrift->Ausgabe->Artikel)</a>
@@ -491,7 +499,7 @@
       <hr>
       <footer>
         <p>© Konstantin Baierer 2016</p>
-      </footer><a href="https://github.com/kba/rssscrpr"><img style="position: fixed; top: 0; right: 0; border: 0;z-index: 1030" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+      </footer><a href="https://github.com/kba/rssscrpr" class="hidden-sm hidden-xs"><img style="position: fixed; top: 0; right: 0; border: 0;z-index: 1030" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
       <script src="./js/main.js"></script>
     </div>
   </body>
