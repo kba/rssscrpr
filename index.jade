@@ -22,7 +22,15 @@ html
 						span.icon-bar
 						span.icon-bar
 					a.navbar-brand(href='#') RSS Scrpr
-				// /.navbar-collapse
+					ul.nav.navbar-nav
+						li.dropdown
+							a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='true')
+								| Examples
+								span.caret
+							ul.dropdown-menu#examples-menu
+						li
+							a(href='https://github.com/kba/rssscrpr/wiki',target='_blank') Wiki
+
 		.container-fluid(style='margin-top: 80px;')
 			// Example row of columns
 			.row
@@ -43,7 +51,7 @@ html
 								.panel-heading
 									a(role="button", data-toggle="collapse" href="#componentsCollapsible")
 										| Components
-								.componentsCollapsible.collapse.in
+								#componentsCollapsible.collapse.in
 									.panel-body
 										each componentList, componentType in api
 											.form-group
@@ -138,24 +146,6 @@ html
 					#results.panel.panel-default
 						.panel-heading Results
 						.panel-body
-							| Beispiele: 
-							a(data-example-url='https://localhost/api.php?url=http%3A%2F%2Fwww.inetbib.de%2Flistenarchiv%2F&action=scrape-html&scraper=MHonArcScraper&scraper_feedTitle=Inetbib+Neueste+Beitraege&fetcher=CachingHttpFetcher&parser=HTMLParser&filter_maxResult=30')
-								| Inetbib
-							|&nbsp;|&nbsp;
-							a(data-example-url='http://localhost/rss-scraper/api.php?url=https%3A%2F%2Ftwitter.com%2FUBMannheim&action=scrape-html&scraper=TwitterScraper&scraper_feedTitle=Tweets+der+UBMannheim&fetcher=CachingHttpFetcher&parser=HTMLParser&nofb=on&filter_exclude_title=blog.bib')
-								| Twitter
-							|&nbsp;|&nbsp;
-							a(data-example-url='http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fintranet.verwaltung.uni-mannheim.de%2Fintranet%2Fdez_vi%2Forganisation%2Frektoratsnachrichten%2Findex.html&action=scrape-html&scraper=RektoratScraper&fetcher=CachingHttpFetcher&parser=CrawlOutgoingHTMLParser&parser_xpathOutgoing=%2F%2Ful%5B1%5D%2Fli%2Fa%2F%40href')
-								| Rektoratsnachrichten
-							|&nbsp;|&nbsp;
-							a(data-example-url='http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fwww.belwue.de%2Findex.php%3Ftype%3D100%26tx_ttnews%5Bcat%5D%3D5&action=scrape-html&scraper=RSSScraper&scraper_feedTitle=Stoerungen+in+BaWue&fetcher=CachingHttpFetcher&parser=XMLParser&filter_include_title=Strom')
-								| RSS-Feed
-							|&nbsp;|&nbsp;
-							a(data-example-url='http://localhost/rss-scraper/api.php?url=https%3A%2F%2Fwww.facebook.com%2FUBMannheim&action=scrape-html&scraper=FacebookScraper&fetcher=FacebookFetcher&fetcher_maxCacheTime=600&parser=HTMLParser')
-								| Facebook
-							|&nbsp;|&nbsp;
-							a(data-example-url='http://localhost/rss-scraper/api.php?url=http%3A%2F%2Fzs.thulb.uni-jena.de%2Freceive%2Fjportal_jpjournal_00000014&action=scrape-html&scraper=XpathScraper&scraper_xpathItem=%2F%2Fdiv%5Bcontains(%40class%2C+%22jp-objectlist-metadata%22)%5D&scraper_xpathTitle=.%2Fh3&scraper_xpathLink=.%2Fh3%2Fa%2F%40href&scraper_xpathAuthor=.%2F%2Fli%5B1%5D%2Fspan%5Bcontains(%40class%2C+%22jp-layout-inList%22)%5D&scraper_xpathDescription=..&scraper_xpathDate=.%2F%2Fancestor%3A%3Abody%2F%2Fdd%5B1%5D%2Ftext()&fetcher=CachingHttpFetcher&parser=CrawlOutgoingHTMLParser&parser_xpathOutgoing=%2F%2Fdiv%5B%40id%3D%22jp-tableOfContent%22%5D%2F%2Ful%2Fli%2Fa%2F%40href%2C%2F%2Fdiv%5B%40id%3D%22jp-tableOfContent%22%5D%2F%2Ful%2Fli%2Fa%2F%40href&filter_maxResult=100')
-								| (Zeitschrift->Ausgabe->Artikel)
 							#input-group-url.input-group
 								input#inputUrl.form-control(type='text', placeholder='Hier die URL')
 								span.input-group-btn
@@ -165,9 +155,9 @@ html
 							span#results-found 0
 							#result-list
 			hr
-			footer
-				p © Konstantin Baierer 2016
 			a(class='hidden-sm hidden-xs', href='https://github.com/kba/rssscrpr')
 				img(style='position: fixed; top: 0; right: 0; border: 0;z-index: 1030', src='https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67', alt='Fork me on GitHub', data-canonical-src='https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png')
 			script(src='./js/main.js')
+			footer
+				p © Konstantin Baierer 2016
 // vim: set sw=2 ts=2:

@@ -127,8 +127,33 @@ function loadExample() {
 $("input").on('click', syncFormEnable);
 $("select").on('change', syncFormEnable);
 runButton.on('click', onClickRun);
-$("a[data-example-url]").on('click', loadExample);
 $("#import-feed button").on('click', onClickImport);
+
+$.ajax({
+    url: 'doc/examples.json',
+    type: 'GET',
+    dataType: 'json',
+    error: function(xhr, status, err) {
+        console.log(status, xhr);
+    },
+    success: function(examples) {
+        var $examplesMenu = $("#examples-menu");
+        var categories = Object.keys(examples);
+        for (var i = 0; i < categories.length; i++) {
+            $examplesMenu.
+                append($('<li class="divider">')).
+                append($('<li class="dropdown-header">').append(categories[i]));
+            var titles = Object.keys(examples[categories[i]]);
+            for (var j = 0; j < titles.length; j++) {
+                $examplesMenu.append(
+                    '<li><a data-example-url=' +
+                    examples[categories[i]][titles[j]] +
+                    '>' + titles[j] + '</a></li>');
+            }
+        }
+        $("a[data-example-url]").on('click', loadExample);
+    },
+});
 
 /*
  * Run once at load
