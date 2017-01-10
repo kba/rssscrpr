@@ -9,7 +9,7 @@ class AtomParser
         $chan = new DOMDocument();
         $chan->loadXML(mb_convert_encoding($session->bytes, 'HTML-ENTITIES', 'UTF-8'));
         $sheet = new DOMDocument();
-        $sheet->load('data/atom2rss/atom2rss.xsl'); /* use stylesheet from this page */
+        $sheet->load('vendor/atom2rss/atom2rss.xsl'); /* use stylesheet from this page */
         $processor = new XSLTProcessor();
         $processor->registerPHPFunctions();
         $processor->importStylesheet($sheet);

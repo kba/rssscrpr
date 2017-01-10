@@ -1,7 +1,7 @@
 <?php
 
 require_once 'src/model/Feed.php';
-require_once 'src/phpuri.php';
+require_once 'src/util/phpuri.php';
 
 class Session
 {
