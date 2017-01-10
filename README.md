@@ -1,6 +1,10 @@
 RSS-scraper
 ===========
 
+## End-user documentation
+
+See the [Github wiki](https://github.com/kba/rssscrpr/wiki)
+
 ## Dependencies
 
 * PHP 5.4
