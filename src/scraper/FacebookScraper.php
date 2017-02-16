@@ -5,7 +5,7 @@ class FacebookScraper extends XpathScraper
 
     function __construct()
     {
-        $this->xpathItem = "//div[contains(@class, 'userContentWrapper ')]";
+        $this->xpathItem = "//div[contains(@class, 'fbUserContent')]";
 
         $this->xpathTitle = './/div[contains(@class, "userContent")]';
         $this->xpathLink = './/a[contains(@class, "5pcq")]/@href';
